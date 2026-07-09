@@ -242,6 +242,18 @@
   <img src="../assets/supabase/01-login.png" alt="Supabase 로그인 화면">
   <figcaption>Supabase 로그인 화면</figcaption>
 </figure>
+<figure>
+  <img src="../assets/supabase/01b-github-login-google.png" alt="GitHub 로그인 창">
+  <figcaption>GitHub 로그인 창 (Google 계정으로 로그인하는 경우)</figcaption>
+</figure>
+<figure>
+  <img src="../assets/supabase/01c-authorize-supabase.png" alt="Supabase 접근 허용 화면">
+  <figcaption>Supabase의 GitHub 접근 허용 화면</figcaption>
+</figure>
+<figure>
+  <img src="../assets/supabase/01d-new-organization.png" alt="새 조직 만들기 화면">
+  <figcaption>처음 로그인하면 뜨는 조직(Organization) 만들기 화면</figcaption>
+</figure>
 <div class="note">GitHub로 가입하면 Vercel 때 쓴 계정과 같아 헷갈리지 않습니다. 이메일 가입도 가능합니다.</div>
 
 <hr>
@@ -262,9 +274,21 @@
   <img src="../assets/supabase/02-new-project.png" alt="프로젝트 생성 화면">
   <figcaption>프로젝트 생성 화면</figcaption>
 </figure>
+<figure>
+  <img src="../assets/supabase/02b-db-password.png" alt="Database Password 입력칸">
+  <figcaption>Database Password 자동 생성 버튼</figcaption>
+</figure>
 <ol start="3">
   <li><strong>Create new project</strong>(프로젝트 생성)를 누릅니다. 준비되는 데 <strong>1~2분</strong> 걸립니다.</li>
 </ol>
+<figure>
+  <img src="../assets/supabase/02c-provisioning.png" alt="프로젝트 준비 중 화면">
+  <figcaption>프로젝트가 준비되는 동안(Provisioning) 화면</figcaption>
+</figure>
+<figure>
+  <img src="../assets/supabase/02d-project-ready.png" alt="프로젝트 준비 완료 화면">
+  <figcaption>준비가 끝나 Healthy 상태가 된 화면</figcaption>
+</figure>
 <div class="warn">
   <strong>중요</strong> — Database Password는 나중에 찾기 어렵습니다. 팀 메모장에 적어 두세요. (이 데모에서 직접 쓰진 않지만 분실하면 곤란합니다.)
 </div>
@@ -295,7 +319,44 @@
 </table>
 <figure>
   <img src="../assets/supabase/03-table-new.png" alt="표 만들기 화면">
-  <figcaption>표 만들기 화면</figcaption>
+  <figcaption>표 만들기 화면 — New table 누르기</figcaption>
+</figure>
+<figure>
+  <img src="../assets/supabase/03a-table-name-field.png" alt="표 이름 입력칸">
+  <figcaption>표 이름(Name) 입력칸에 <code>notices</code> 입력</figcaption>
+</figure>
+<figure>
+  <img src="../assets/supabase/03a2-add-column.png" alt="Add column 버튼">
+  <figcaption>열을 추가하려면 Add column 버튼을 누릅니다</figcaption>
+</figure>
+<figure>
+  <img src="../assets/supabase/03a3-title-column-fields.png" alt="새 열 이름·자료형 입력칸">
+  <figcaption>새 열의 이름(①)과 자료형(②)을 채웁니다</figcaption>
+</figure>
+<figure>
+  <img src="../assets/supabase/03a4-title-type-text-option.png" alt="자료형 목록에서 text 선택">
+  <figcaption>자료형 목록에서 <code>text</code>를 선택합니다</figcaption>
+</figure>
+<p>같은 방법으로 <code>content</code> 열도 추가하고 자료형을 <code>text</code>로 맞춥니다.</p>
+<div class="warn">
+  <strong>RLS 안내(중요)</strong> — 표 이름 아래 <strong>Enable Row Level Security (RLS)</strong> 체크가 켜져 있으면 기본적으로 바깥에서 데이터를 못 읽습니다. 아래 화면처럼 경고가 뜹니다.
+</div>
+<figure>
+  <img src="../assets/supabase/03b-rls-checkbox.png" alt="RLS 체크박스">
+  <figcaption>Enable Row Level Security (RLS) 체크 해제 위치</figcaption>
+</figure>
+<figure>
+  <img src="../assets/supabase/03c-disable-rls-confirm.png" alt="RLS 해제 확인 창">
+  <figcaption>체크를 해제하면 뜨는 확인 창 — Disable RLS를 누릅니다</figcaption>
+</figure>
+<div class="note">이 데모에서는 <strong>연습용으로 RLS를 꺼서</strong> 별도 정책 없이 바로 데이터가 보이게 합니다. 실제 서비스에서는 RLS를 켜고 읽기 정책을 따로 만드는 것이 안전합니다.</div>
+<figure>
+  <img src="../assets/supabase/03d-rls-disabled-result.png" alt="RLS 해제된 결과 화면">
+  <figcaption>RLS가 꺼진(Disabled) 상태로 바뀐 화면</figcaption>
+</figure>
+<figure>
+  <img src="../assets/supabase/03b-table-columns-filled.png" alt="열이 모두 채워진 화면">
+  <figcaption>id · created_at · title · content 열이 모두 준비된 화면 — Save 누르기</figcaption>
 </figure>
 <ol start="3">
   <li><strong>Save</strong>(저장)를 누릅니다.</li>
@@ -303,8 +364,8 @@
 <div class="note">
   <strong>강사 포인트</strong> — 열 이름은 <strong>영어 소문자</strong>로 (예: <code>title</code>). 6단계 코드에서 이 이름을 그대로 씁니다 — 한글이나 띄어쓰기를 넣으면 나중에 막힙니다.
 </div>
-<div class="warn">
-  <strong>RLS(공개 권한) 안내</strong> — 표를 만들 때 <strong>Enable Row Level Security</strong>가 켜져 있으면, 기본적으로는 바깥에서 데이터를 못 읽습니다. 이 데모에서는 <strong>누구나 읽기(조회)만 가능한 공개 정책</strong>을 하나 켜줘야 화면에 데이터가 보입니다 → 아래 "자주 막히는 곳"의 <a href="#rls">읽기 공개 정책</a> 참고. 잘 모르겠으면 강사에게 "읽기 공개 정책" 요청.
+<div class="note">
+  <strong>RLS를 켜둔 채로 진행했다면</strong> — 위에서 RLS를 끄지 않고 그대로 저장했다면, 화면에 데이터가 안 보일 수 있습니다. 그럴 때는 <strong>누구나 읽기(조회)만 가능한 공개 정책</strong>을 하나 켜주면 됩니다 → 아래 "자주 막히는 곳"의 <a href="#rls">읽기 공개 정책</a> 참고. 잘 모르겠으면 강사에게 "읽기 공개 정책" 요청.
 </div>
 
 <hr>
@@ -333,17 +394,44 @@
 <h2 id="step4"><span class="step-badge">4단계</span>연결 정보 복사 (Project URL + API Key)</h2>
 <p>사이트가 이 표를 읽으려면 <strong>주소(URL)</strong>와 <strong>열쇠(API Key)</strong> 두 개가 필요합니다.</p>
 <ol>
-  <li>왼쪽 아래 <strong>Settings → API</strong>(또는 <strong>Project Settings → API</strong>)로 들어갑니다.</li>
+  <li>왼쪽 아래 <strong>Project Settings</strong>에 마우스를 올리면(hover) 오른쪽에 하위 메뉴가 나타납니다.</li>
+</ol>
+<figure>
+  <img src="../assets/supabase/06a-project-settings-hover.png" alt="Project Settings에 마우스를 올린 화면">
+  <figcaption>Project Settings에 마우스를 올리면 하위 메뉴가 펼쳐집니다</figcaption>
+</figure>
+<ol start="2">
+  <li>펼쳐진 메뉴에서 <strong>API Keys</strong>를 누릅니다.</li>
+</ol>
+<figure>
+  <img src="../assets/supabase/06b-api-keys-menu.png" alt="API Keys 메뉴 위치">
+  <figcaption>Configuration 메뉴의 API Keys</figcaption>
+</figure>
+<p>새 버전 화면에는 <strong>Publishable and secret API keys</strong> 탭이 기본으로 열립니다. 이 튜토리얼은 예전 방식인 <strong>anon / service_role</strong> 키를 쓰므로, <strong>Legacy anon, service_role API keys</strong> 탭을 눌러 전환합니다.</p>
+<figure>
+  <img src="../assets/supabase/06c-legacy-keys-tab.png" alt="Legacy anon, service_role API keys 탭">
+  <figcaption>Legacy anon, service_role API keys 탭으로 전환</figcaption>
+</figure>
+<ol start="3">
   <li>두 값을 확인합니다.
     <ul>
       <li><strong>Project URL</strong>: <code>https://xxxxxxxx.supabase.co</code> 형태</li>
-      <li><strong>anon public</strong> 키: <code>Project API Keys</code> 항목의 <strong>anon / public</strong> 값 (긴 문자열)</li>
+      <li><strong>anon public</strong> 키: <code>anon</code> · <code>public</code> 태그가 붙은 값 (긴 문자열)</li>
     </ul>
   </li>
 </ol>
 <figure>
   <img src="../assets/supabase/06-api-settings.png" alt="API 연결 정보 화면">
-  <figcaption>API 연결 정보 화면</figcaption>
+  <figcaption>API 연결 정보 화면 (anon / public 키)</figcaption>
+</figure>
+<figure>
+  <img src="../assets/supabase/06c2-public-tag.png" alt="anon 키 값 복사 위치">
+  <figcaption>anon 키 값 오른쪽의 Copy 버튼을 눌러 복사합니다</figcaption>
+</figure>
+<p>Project URL은 왼쪽 메뉴 맨 위 <strong>Project Overview</strong>(홈) 화면, 프로젝트 이름 바로 아래에서도 복사할 수 있습니다.</p>
+<figure>
+  <img src="../assets/supabase/06e-project-url.png" alt="Project Overview의 Project URL 복사 위치">
+  <figcaption>Project Overview 화면의 Project URL 복사 위치</figcaption>
 </figure>
 <div class="warn">
   <strong>anon public 키만</strong> 씁니다. 그 아래 <strong>service_role</strong> 키는 관리자용 비밀 키라 <strong>절대 사이트/코드에 넣지 않습니다.</strong> 이름에 <code>anon</code>(익명)이 있는 것만 복사하세요.
@@ -355,6 +443,19 @@
 <p>복사한 두 값을 <strong>코드에 직접 쓰지 않고</strong> Vercel 환경변수에 넣습니다. (Vercel 따라하기 5단계에서 익힌 그 자리입니다.)</p>
 <ol>
   <li>Vercel에서 우리 프로젝트 → <strong>Settings → Environment Variables</strong>로 들어갑니다.</li>
+</ol>
+<figure>
+  <img src="../assets/supabase/07a-env-nav.png" alt="Environment Variables 메뉴 위치">
+  <figcaption>왼쪽 메뉴의 Environment Variables</figcaption>
+</figure>
+<ol start="2">
+  <li><strong>Add Environment Variable</strong> 버튼을 누릅니다.</li>
+</ol>
+<figure>
+  <img src="../assets/supabase/07b-add-env-button.png" alt="Add Environment Variable 버튼">
+  <figcaption>Add Environment Variable 버튼 위치</figcaption>
+</figure>
+<ol start="3">
   <li>값 두 개를 각각 추가합니다.</li>
 </ol>
 <table>
@@ -370,8 +471,8 @@
   <img src="../assets/supabase/07-vercel-env.png" alt="Vercel 환경변수 입력">
   <figcaption>Vercel 환경변수 입력</figcaption>
 </figure>
-<ol start="3">
-  <li>각각 <strong>Save</strong>(저장)를 누릅니다.</li>
+<ol start="4">
+  <li><strong>Save</strong>(저장)를 누릅니다.</li>
 </ol>
 <div class="warn">
   <strong>중요</strong> — 이름의 철자가 한 글자라도 다르면 화면에 데이터가 안 나옵니다. <code>NEXT_PUBLIC_</code> 접두사까지 <strong>그대로</strong> 복사하세요. (강사가 준 코드가 이 이름을 찾습니다.)
