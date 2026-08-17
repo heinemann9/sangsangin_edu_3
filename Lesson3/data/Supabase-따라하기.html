@@ -195,7 +195,7 @@
 </ul>
 
 <div class="note">
-  <strong>먼저 끝나 있어야 하는 것</strong> — <a href="Vercel-배포-따라하기.html">Vercel 배포 따라하기</a>의 7단계까지 완료(사이트가 <code>주소.vercel.app</code>으로 떠 있고, 환경변수 넣는 자리를 알고 있음). 이 문서는 그 다음입니다.
+  <strong>먼저 끝나 있어야 하는 것</strong> — <a href="Vercel-배포-따라하기.html">Vercel 배포 따라하기</a>의 8단계까지 완료(사이트가 <code>주소.vercel.app</code>으로 떠 있고, 환경변수 넣는 자리를 알고 있음). 이 문서는 그 다음입니다.
 </div>
 
 <div class="note">
@@ -565,17 +565,6 @@ export default async function Page() {
 <div class="warn">
   이건 "데모라서 데이터를 공개로 읽게" 하는 설정입니다. 비밀번호·개인정보 같은 민감한 데이터는 이렇게 열지 않습니다 — 실제 서비스에서는 로그인한 사람만 읽게 정책을 좁힙니다.
 </div>
-
-<hr>
-
-<h2>강사 메모</h2>
-<ul>
-  <li>본 문서는 <a href="Curriculum.md">Curriculum.md</a> <strong>4교시(데이터 저장소 설계)</strong> + <strong>5교시(사이트-데이터 연결)</strong>를 비개발자용 "따라하기"로 풀어낸 것입니다. 앞 단계(배포·환경변수)는 <a href="Vercel-배포-따라하기.html">Vercel 배포 따라하기</a>.</li>
-  <li><strong>핵심 체크포인트: 7단계(데이터 화면 표시)</strong> — 5교시 체크포인트와 동일. 데이터가 한 줄이라도 뜨면 크게 격려해 6교시 동력으로 잇습니다.</li>
-  <li><strong>가장 자주 막히는 3대 지점</strong> 순서 고정: (1) 환경변수 철자 → (2) 표/열 이름 일치 → (3) RLS 공개 정책. 체크리스트를 이 순서로 짚으면 대부분 잡힙니다.</li>
-  <li>6단계 스니펫은 팀 프레임워크(예: Next.js)에 맞춰 강사가 조정해 배포. 수강생은 <strong>표/열 이름 교체</strong>에만 집중하도록 안내.</li>
-  <li><code>anon public</code>과 <code>service_role</code> 키 혼동 주의 — service_role은 절대 사이트/코드/환경변수 공개 노출 금지.</li>
-</ul>
 
 <footer class="doc-foot">
   Supabase 따라하기 · 상상인 교육 Lesson 3 · AXLab-154 · 2026-07

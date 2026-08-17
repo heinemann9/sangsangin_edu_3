@@ -188,25 +188,27 @@
   <ol>
     <li><a href="#step0">Vercel 로그인 (GitHub로 가입)</a></li>
     <li><a href="#step1">GitHub 연결 + Vercel 앱 설치</a></li>
-    <li><a href="#step2">프로젝트 가져오기 (Import)</a></li>
-    <li><a href="#step3">배포하기 (Deploy)</a></li>
-    <li><a href="#step4">배포된 사이트 확인</a></li>
-    <li><a href="#step5">환경변수 넣기</a></li>
-    <li><a href="#step6">다시 배포하기 (Redeploy)</a></li>
-    <li><a href="#step7">결과 확인</a></li>
+    <li><a href="#step2">내 저장소 만들기 (미러링)</a></li>
+    <li><a href="#step3">프로젝트 가져오기 (Import)</a></li>
+    <li><a href="#step4">배포하기 (Deploy)</a></li>
+    <li><a href="#step5">배포된 사이트 확인</a></li>
+    <li><a href="#step6">환경변수 넣기</a></li>
+    <li><a href="#step7">다시 배포하기 (Redeploy)</a></li>
+    <li><a href="#step8">결과 확인</a></li>
   </ol>
 </nav>
 
 <h2>준비물</h2>
 <ul>
-  <li><strong>GitHub 계정</strong> + 우리 팀 프로젝트가 올라간 저장소 (1·2회차에서 준비 완료)</li>
+  <li><strong>GitHub 계정</strong> (저장소는 2단계에서 강사 저장소를 복사해 직접 만듭니다)</li>
+  <li><strong>강사가 알려준 튜토리얼 저장소 주소</strong> (2단계에서 복사할 원본)</li>
   <li><strong>이메일</strong> (Vercel 가입용 — GitHub로 바로 가입 가능)</li>
   <li>웹 브라우저 (크롬 권장)</li>
 </ul>
 
-<p>전체 흐름은 이렇게 7단계입니다.</p>
-<div class="flow">0. Vercel 로그인 → 1. GitHub 연결·설치 → 2. 프로젝트 가져오기(Import)<br>
-&nbsp;&nbsp;&nbsp;→ 3. 배포(Deploy) → 4. 사이트 확인 → 5. 환경변수 넣기 → 6. 다시 배포 → 7. 결과 확인</div>
+<p>전체 흐름은 이렇게 8단계입니다.</p>
+<div class="flow">0. Vercel 로그인 → 1. GitHub 연결·설치 → 2. 내 저장소 만들기(미러링) → 3. 프로젝트 가져오기(Import)<br>
+&nbsp;&nbsp;&nbsp;→ 4. 배포(Deploy) → 5. 사이트 확인 → 6. 환경변수 넣기 → 7. 다시 배포 → 8. 결과 확인</div>
 
 <hr>
 
@@ -253,10 +255,63 @@
 
 <hr>
 
-<h2 id="step2"><span class="step-badge">2단계</span>프로젝트 가져오기 (Import)</h2>
+<h2 id="step2"><span class="step-badge">2단계</span>내 저장소 만들기 (미러링) <small>(강사 저장소 → 내 저장소)</small></h2>
+<p>강사가 만들어 둔 튜토리얼 저장소를 <strong>통째로 복사해서 내 저장소로 만드는</strong> 과정입니다. 이걸 <strong>미러링(mirroring)</strong>이라고 합니다. Vercel은 <strong>내 저장소</strong>만 가져올 수 있고, 앞으로 코드를 고치려면 내 것이어야 하기 때문입니다.</p>
+<ol>
+  <li>GitHub 홈에서 왼쪽 위 초록색 <strong>New</strong>(새로 만들기) 버튼을 누릅니다.</li>
+</ol>
+<figure>
+  <img src="../assets/vercel/mirror-1-github-new-repo.png" alt="GitHub 홈의 New 버튼">
+  <figcaption>① 초록색 New 버튼</figcaption>
+</figure>
+<ol start="2">
+  <li><strong>Repository name</strong>(저장소 이름)에 <code>vercel-test</code> 를 입력합니다. <strong>이름은 <code>vercel-test</code> 로 맞춰주세요.</strong></li>
+  <li>나머지 설정은 그대로 두고, 맨 아래 <strong>Create repository</strong>(저장소 만들기)를 누릅니다.</li>
+</ol>
+<div class="note"><strong>Add README·.gitignore·license는 켜지 마세요.</strong> 완전히 비어 있는 저장소여야 다음 단계의 복사가 깔끔하게 들어갑니다.</div>
+<figure>
+  <img src="../assets/vercel/mirror-2-create-repo-form.png" alt="새 저장소 만들기 폼">
+  <figcaption>① 저장소 이름은 vercel-test ② Create repository 버튼</figcaption>
+</figure>
+<ol start="4">
+  <li>저장소가 만들어지면 안내 화면이 나옵니다. 여기 있는 <strong>HTTPS 주소</strong>를 복사합니다. 이게 <strong>내 저장소 주소</strong>입니다.</li>
+</ol>
+<figure>
+  <img src="../assets/vercel/mirror-3-repo-url.png" alt="새로 만든 저장소의 HTTPS 주소">
+  <figcaption>① 복사할 내 저장소 주소</figcaption>
+</figure>
+<ol start="5">
+  <li>Claude Code에 <strong>강사가 알려준 원본 주소</strong>와 <strong>방금 복사한 내 저장소 주소</strong>를 함께 주고, 복사(미러링)해 달라고 요청합니다.</li>
+</ol>
+<figure>
+  <img src="../assets/vercel/mirror-4-claude-request.png" alt="Claude Code에 미러링을 요청하는 화면">
+  <figcaption>① 강사가 만든 원본 저장소 (가져올 곳) ② 내가 방금 만든 저장소 (넣을 곳)</figcaption>
+</figure>
+<div class="warn">
+  <strong>두 주소를 헷갈리지 마세요.</strong> <strong>위</strong>가 강사가 만든 <strong>원본</strong>(가져올 곳), <strong>아래</strong>가 방금 만든 <strong>내 저장소</strong>(넣을 곳)입니다. 순서가 바뀌면 엉뚱한 저장소를 덮어쓰게 됩니다.
+</div>
+<ol start="6">
+  <li>끝나면 내 저장소 페이지를 새로고침합니다. 파일 목록과 <strong>브랜치·커밋</strong>이 원본 그대로 들어와 있으면 성공입니다.</li>
+</ol>
+<figure>
+  <img src="../assets/vercel/mirror-5-after-mirroring.png" alt="미러링이 끝난 내 저장소">
+  <figcaption>① 브랜치와 ② 커밋이 원본 그대로 복사됨</figcaption>
+</figure>
+
+<hr>
+
+<h2 id="step3"><span class="step-badge">3단계</span>프로젝트 가져오기 (Import)</h2>
 <p>연결이 끝나면 우리 저장소를 고를 수 있습니다.</p>
 <ol>
-  <li>저장소 목록(또는 검색)에서 우리 팀 저장소를 찾아 <strong>Import</strong>(가져오기)를 누릅니다.</li>
+  <li>Vercel에서 <strong>Add New… → Project</strong>로 들어가면 <strong>Import Git Repository</strong> 목록에 방금 만든 <code>vercel-test</code>가 보입니다.</li>
+</ol>
+<figure>
+  <img src="../assets/vercel/mirror-6-vercel-import.png" alt="Import Git Repository 목록에 보이는 vercel-test">
+  <figcaption>① 미러링한 vercel-test 저장소 ② Import 버튼</figcaption>
+</figure>
+<div class="note">목록에 <code>vercel-test</code>가 안 보이면 1단계의 <strong>Vercel 앱 설치·접근 권한</strong>이 그 계정에 안 돼 있는 것입니다. 1단계로 돌아가 설치하거나, 접근 범위에 <code>vercel-test</code>를 추가해 주세요.</div>
+<ol start="2">
+  <li><code>vercel-test</code> 오른쪽의 <strong>Import</strong>(가져오기)를 누릅니다.</li>
   <li>아래 설정 화면이 나옵니다. <strong>대부분 그대로 두면 됩니다.</strong>
     <ul>
       <li><strong>Vercel Team / Project Name</strong>: 그대로 두기 (프로젝트 이름만 원하면 바꿔도 됨)</li>
@@ -266,10 +321,6 @@
   </li>
 </ol>
 <figure>
-  <img src="../assets/vercel/03-import-config.png" alt="저장소 목록에서 Import">
-  <figcaption>저장소 목록에서 Import</figcaption>
-</figure>
-<figure>
   <img src="../assets/vercel/04-project-config.png" alt="프로젝트 설정 화면">
   <figcaption>프로젝트 설정 화면</figcaption>
 </figure>
@@ -277,7 +328,7 @@
 
 <hr>
 
-<h2 id="step3"><span class="step-badge">3단계</span>배포하기 (Deploy)</h2>
+<h2 id="step4"><span class="step-badge">4단계</span>배포하기 (Deploy)</h2>
 <ol>
   <li>맨 아래 <strong>Deploy</strong>(배포) 버튼을 누릅니다.</li>
   <li>잠시 빌드(사이트를 만드는 과정)가 돌아갑니다. <strong>1~2분 정도 기다리면 됩니다.</strong></li>
@@ -299,7 +350,7 @@
 
 <hr>
 
-<h2 id="step4"><span class="step-badge">4단계</span>배포된 사이트 확인</h2>
+<h2 id="step5"><span class="step-badge">5단계</span>배포된 사이트 확인</h2>
 <ol>
   <li>축하 화면에서 <strong>Continue to Dashboard</strong>(대시보드로 이동)를 누릅니다.</li>
   <li>프로젝트 대시보드에서 우리 사이트 주소 <strong><code>...vercel.app</code></strong> 을 확인할 수 있습니다.</li>
@@ -319,7 +370,7 @@
 
 <hr>
 
-<h2 id="step5"><span class="step-badge">5단계</span>환경변수 넣기</h2>
+<h2 id="step6"><span class="step-badge">6단계</span>환경변수 넣기</h2>
 <p><strong>환경변수</strong>는 비밀번호·열쇠처럼 <strong>코드에 직접 쓰면 안 되는 값</strong>, 또는 <strong>상황에 따라 바꾸고 싶은 값</strong>을 따로 보관하는 곳입니다. 여기서는 화면에 보일 팀 이름을 환경변수로 넣어봅니다.</p>
 <ol>
   <li>프로젝트 화면 왼쪽 메뉴에서 <strong>Settings → Environment Variables</strong>(환경변수)로 들어갑니다. 처음엔 비어 있습니다.</li>
@@ -354,7 +405,7 @@
 
 <hr>
 
-<h2 id="step6"><span class="step-badge">6단계</span>다시 배포하기 (Redeploy)</h2>
+<h2 id="step7"><span class="step-badge">7단계</span>다시 배포하기 (Redeploy)</h2>
 <ol>
   <li>왼쪽 메뉴 <strong>Deployments</strong>(배포)로 갑니다.</li>
   <li>맨 위 배포 줄 오른쪽의 <strong>⋯</strong>(더보기) 버튼을 누르고 <strong>Redeploy</strong>(재배포)를 선택합니다.</li>
@@ -376,7 +427,7 @@
 
 <hr>
 
-<h2 id="step7"><span class="step-badge">7단계</span>결과 확인</h2>
+<h2 id="step8"><span class="step-badge">8단계</span>결과 확인</h2>
 <p>재배포가 끝나면 사이트 주소를 새로고침합니다. 팀 이름이 <strong>방금 넣은 값("1조")으로 바뀌어</strong> 있습니다.</p>
 <table>
   <thead>
@@ -412,20 +463,10 @@
     <tr><td>저장소 목록에 우리 저장소가 안 보임</td><td>Vercel 앱이 그 계정/조직에 설치 안 됨</td><td>1단계처럼 해당 계정에 Vercel 설치 (All 또는 해당 저장소 선택)</td></tr>
     <tr><td>"install the GitHub integration first" 빨간 경고</td><td>같은 원인 (앱 미설치)</td><td>위와 동일</td></tr>
     <tr><td>배포는 됐는데 흰 화면</td><td>빌드는 됐지만 실행 중 오류</td><td>강사와 함께 로그(Logs) 확인</td></tr>
-    <tr><td>환경변수 넣었는데 화면이 그대로</td><td>재배포를 안 함</td><td>6단계 재배포</td></tr>
+    <tr><td>환경변수 넣었는데 화면이 그대로</td><td>재배포를 안 함</td><td>7단계 재배포</td></tr>
     <tr><td>코드 고쳤는데 사이트가 안 바뀜</td><td>GitHub에 push가 안 됨</td><td>GitHub에 올라갔는지 확인 후 재배포</td></tr>
   </tbody>
 </table>
-
-<hr>
-
-<h2>강사 메모</h2>
-<ul>
-  <li>본 문서의 스크린샷은 데모 저장소 <code>sangsangin-vercel-demo</code>(최소 Next.js 예제)로 캡처했습니다. 화면이 단순해 비개발자도 각 단계를 또렷이 따라가도록 구성했습니다.</li>
-  <li>핵심 체크포인트: <strong>3단계(배포 주소 확보)</strong> 와 <strong>7단계(환경변수 반영 확인)</strong>. 막힌 팀은 이 두 지점을 기준으로 따라잡힙니다.</li>
-  <li>1단계(GitHub 연결·설치)가 실제 현장에서 가장 자주 막히는 지점입니다. 계정/조직 선택과 저장소 접근 범위를 화면 공유로 함께 짚어주세요.</li>
-  <li>상세 진행안(교시별 강사 가이드)은 <a href="Curriculum.md">Curriculum.md</a> 참조.</li>
-</ul>
 
 <footer class="doc-foot">
   Vercel 배포 따라하기 · 상상인 교육 Lesson 3 · AXLab-154 · 2026-07
