@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vercel 배포 따라하기 (MCP 버전) — Claude Code로 대화하며 배포하기</title>
+<style>
+  :root {
+    --fg: #1f2328;
+    --muted: #59636e;
+    --accent: #3ecf8e;
+    --accent-link: #0969da;
+    --border: #d1d9e0;
+    --bg-soft: #f6f8fa;
+    --bg-note: #ddf4ff;
+    --bg-warn: #fff8c5;
+    --border-warn: #d4a72c;
+    --bg-code: #1f2937;
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans KR", "Apple SD Gothic Neo", Helvetica, Arial, sans-serif;
+    color: var(--fg);
+    line-height: 1.7;
+    max-width: 820px;
+    margin: 0 auto;
+    padding: 40px 20px 80px;
+    background: #fff;
+    word-break: keep-all;
+  }
+  header.doc-head {
+    border-bottom: 2px solid var(--accent);
+    padding-bottom: 20px;
+    margin-bottom: 32px;
+  }
+  header.doc-head h1 {
+    font-size: 2em;
+    margin: 0 0 12px;
+    line-height: 1.3;
+  }
+  .meta {
+    font-size: 0.85em;
+    color: var(--muted);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 16px;
+  }
+  .meta span::before { content: "· "; color: var(--border); }
+  .meta span:first-child::before { content: ""; }
+  h2 {
+    font-size: 1.45em;
+    margin-top: 48px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border);
+  }
+  h2 .step-badge {
+    display: inline-block;
+    background: var(--accent);
+    color: #05291a;
+    border-radius: 999px;
+    font-size: 0.6em;
+    font-weight: 700;
+    padding: 2px 12px;
+    margin-right: 10px;
+    vertical-align: middle;
+  }
+  h3 { font-size: 1.15em; margin-top: 32px; }
+  p { margin: 14px 0; }
+  ol, ul { padding-left: 1.5em; }
+  li { margin: 8px 0; }
+  code {
+    background: var(--bg-soft);
+    border-radius: 6px;
+    padding: 2px 6px;
+    font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+    font-size: 0.9em;
+    color: #cf222e;
+  }
+  pre {
+    background: var(--bg-code);
+    color: #e6edf3;
+    border-radius: 8px;
+    padding: 16px 18px;
+    overflow-x: auto;
+    font-size: 0.86em;
+    line-height: 1.6;
+    margin: 16px 0;
+  }
+  pre code {
+    background: none;
+    color: inherit;
+    padding: 0;
+    font-size: 1em;
+  }
+  a { color: var(--accent-link); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  img {
+    max-width: 100%;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    margin: 12px 0;
+    display: block;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    background: var(--bg-soft);
+  }
+  figure { margin: 20px 0; }
+  figcaption {
+    font-size: 0.85em;
+    color: var(--muted);
+    text-align: center;
+    margin-top: 6px;
+  }
+  .note, .warn {
+    border-radius: 8px;
+    padding: 14px 18px;
+    margin: 20px 0;
+    font-size: 0.96em;
+  }
+  .note {
+    background: var(--bg-note);
+    border-left: 4px solid var(--accent-link);
+  }
+  .warn {
+    background: var(--bg-warn);
+    border-left: 4px solid var(--border-warn);
+  }
+  .flow {
+    background: var(--bg-soft);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 16px 20px;
+    font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+    font-size: 0.9em;
+    line-height: 1.9;
+    overflow-x: auto;
+    color: var(--fg);
+  }
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 20px 0;
+    font-size: 0.95em;
+  }
+  th, td {
+    border: 1px solid var(--border);
+    padding: 10px 14px;
+    text-align: left;
+    vertical-align: top;
+  }
+  th { background: var(--bg-soft); font-weight: 700; }
+  tbody tr:nth-child(even) { background: #fafbfc; }
+  hr { border: 0; border-top: 1px solid var(--border); margin: 40px 0; }
+  .toc {
+    background: var(--bg-soft);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 18px 24px;
+    margin-bottom: 32px;
+  }
+  .toc h2 {
+    margin: 0 0 10px;
+    font-size: 1.05em;
+    border: 0;
+    padding: 0;
+  }
+  .toc ol { margin: 0; }
+  .toc a { color: var(--fg); }
+  footer.doc-foot {
+    margin-top: 56px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border);
+    font-size: 0.9em;
+    color: var(--muted);
+  }
+</style>
+</head>
+<body>
+
+<header class="doc-head">
+  <h1>Vercel 배포 따라하기 <small>(MCP 버전 · 비개발자용)</small></h1>
+  <div class="meta">
+    <span>2026-08</span>
+    <span>AXLab-154</span>
+    <span>대상: 비개발자 · 코드 몰라도 OK</span>
+  </div>
+</header>
+
+<p><a href="Vercel-배포-따라하기.html">Vercel 배포 따라하기</a>와 <strong>목표가 똑같은 문서</strong>입니다. 다른 점은 <strong>대시보드에서 버튼을 누르는 대신 Claude Code 창에 말로 요청</strong>한다는 것입니다.</p>
+
+<div class="warn">
+  <strong>먼저 알아둘 것</strong> — 배포의 <strong>처음 한 번</strong>은 웹 화면에서 해야 합니다. GitHub 계정을 Vercel에 연결하고 권한을 허용하는 단계는 자동화할 수 없습니다. 그 뒤부터 — 환경변수 넣기, 재배포, 오류 확인 — 가 대화로 됩니다.
+</div>
+
+<div class="note">
+  그래서 이 문서는 <strong>웹 버전의 0~3단계를 그대로 참조</strong>하고, 4단계 이후를 MCP 방식으로 다룹니다. <a href="Vercel-배포-따라하기.html">웹 버전</a>을 옆에 열어두세요.
+</div>
+
+<nav class="toc">
+  <h2>전체 흐름</h2>
+  <ol>
+    <li><a href="#step03">0~3단계 — 웹으로 (기존 문서 그대로)</a></li>
+    <li><a href="#step4">통로 열기 (MCP 연결)</a></li>
+    <li><a href="#step5">환경변수 넣기</a></li>
+    <li><a href="#step6">재배포</a></li>
+    <li><a href="#step7">확인</a></li>
+    <li><a href="#step8">막혔을 때 — 오류 진단</a></li>
+  </ol>
+</nav>
+
+<h2>준비물</h2>
+<ul>
+  <li><strong>Claude Code</strong>가 설치되어 실행되는 상태 (1회차에서 준비 완료)</li>
+  <li><strong>팀 프로젝트 폴더</strong>에서 Claude Code를 열어둔 상태</li>
+  <li><strong>GitHub 계정</strong> + 우리 팀 저장소</li>
+  <li><strong>Vercel 계정</strong> (GitHub으로 가입)</li>
+</ul>
+
+<p>전체 흐름입니다. 앞 절반은 웹, 뒤 절반이 MCP입니다.</p>
+<div class="flow">[웹으로] 0. Vercel 로그인 → 1. GitHub 연결·앱 설치 → 2. 저장소 준비 → 3. 프로젝트 가져오기<br>
+[대화로] 4. 통로 열기 → 5. 환경변수 넣기 → 6. 재배포 → 7. 확인 → (막히면) 8. 오류 진단</div>
+
+<hr>
+
+<h2 id="step03"><span class="step-badge">0~3단계</span>웹으로 (기존 문서 그대로)</h2>
+<p><a href="Vercel-배포-따라하기.html">Vercel 배포 따라하기</a>의 <strong>0단계부터 3단계까지</strong> 그대로 진행하세요. 여기서 하는 일은 이렇습니다.</p>
+<table>
+  <thead><tr><th>단계</th><th>하는 일</th><th>왜 자동화가 안 되나</th></tr></thead>
+  <tbody>
+    <tr><td>0</td><td>Vercel 로그인 (GitHub으로 가입)</td><td>계정 생성·본인 인증은 사람이 해야 합니다</td></tr>
+    <tr><td>1</td><td><strong>GitHub 연결 + Vercel 앱 설치</strong></td><td>권한 허용은 GitHub 화면에서만 됩니다. <strong>가장 많이 막히는 곳</strong></td></tr>
+    <tr><td>2</td><td>내 저장소 준비 (미러링)</td><td>저장소를 만들 계정을 사람이 골라야 합니다</td></tr>
+    <tr><td>3</td><td>프로젝트 가져오기 (Import)</td><td>어느 저장소를 어느 프로젝트로 연결할지 사람이 결정합니다</td></tr>
+  </tbody>
+</table>
+
+<p>3단계까지 끝나면 <strong>첫 배포가 자동으로 돌고 사이트 주소(<code>주소.vercel.app</code>)가 나옵니다.</strong> 여기서부터 MCP로 넘어옵니다.</p>
+
+<div class="note">
+  <strong>강사 포인트</strong> — 1단계의 "To link a GitHub repository, you need to install the GitHub integration first" 빨간 경고는 MCP로도 해결이 안 됩니다. 웹 버전 1단계를 꼭 함께 짚어주세요.
+</div>
+
+<hr>
+
+<h2 id="step4"><span class="step-badge">4단계</span>통로 열기 (MCP 연결)</h2>
+<p>한 번만 하면 됩니다.</p>
+<ol>
+  <li>Claude Code 창에 아래를 입력합니다.
+    <div class="flow">claude mcp add --transport http --scope user vercel https://mcp.vercel.com</div>
+  </li>
+  <li>Claude Code를 종료하고 <strong><code>claude --continue</code>로 다시 시작</strong>합니다. (그냥 <code>claude</code>로 시작하면 대화 내용이 사라집니다.)</li>
+  <li><code>/mcp</code>를 입력하고 목록에서 <strong><code>vercel</code></strong>을 고릅니다.</li>
+  <li>브라우저가 열리면 Vercel 계정으로 <strong>허용(Authorize)</strong>을 누릅니다.</li>
+  <li><code>Connected</code>가 나오면 성공입니다.</li>
+</ol>
+
+<div class="note">
+  <strong>목록에서 이름 찾기</strong> — <code>claude.ai Supabase</code>처럼 <code>claude.ai</code>가 붙은 것들과 달리, 이건 그냥 <strong><code>vercel</code></strong>로 목록 <strong>맨 아래</strong>에 보입니다.
+</div>
+
+<p>한 가지 더 — 환경변수를 넣으려면 <strong>명령줄 로그인</strong>도 필요합니다. 아래를 한 번 실행하고 브라우저에서 허용하세요.</p>
+<div class="flow">npx vercel login</div>
+
+<div class="note">
+  <strong>왜 두 번 로그인하나요?</strong> — Vercel MCP는 배포 상태·오류 로그를 <strong>읽는</strong> 데 쓰이고, 환경변수를 <strong>넣는</strong> 기능은 MCP에 없어서 명령줄 도구를 씁니다. Claude가 두 가지를 알아서 나눠 쓰니 여러분은 로그인만 해두면 됩니다.
+</div>
+
+<hr>
+
+<h2 id="step5"><span class="step-badge">5단계</span>환경변수 넣기</h2>
+<p>웹 버전에서 가장 오타가 많이 나는 구간입니다. 이름 한 글자만 틀려도 화면에 아무것도 안 나옵니다.</p>
+<p>Supabase까지 연결하는 경우라면 <a href="Supabase-따라하기-MCP.html">Supabase 따라하기 (MCP 버전)</a>의 4단계처럼 한 줄로 끝납니다.</p>
+<div class="flow">우리 supabase 주소랑 열쇠를 vercel 환경변수에 넣어줘</div>
+
+<p>값을 직접 정하는 환경변수라면 이렇게 말합니다.</p>
+<div class="flow">vercel 환경변수에 NEXT_PUBLIC_TEAM_NAME을 1조로 넣어줘</div>
+
+<p>Claude가 등록하고 확인해 줍니다.</p>
+<div class="flow">등록했습니다.<br>
+&nbsp;&nbsp;NEXT_PUBLIC_TEAM_NAME&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Production, Preview</div>
+
+<p>들어간 값을 확인하려면 이렇게 물어보세요. (값 자체는 가려져 나옵니다 — 정상입니다.)</p>
+<div class="flow">지금 환경변수 뭐가 들어가 있어?</div>
+
+<div class="note">
+  <strong>사람이 값을 옮기지 않으므로 철자 오타가 생기지 않습니다.</strong> 웹 버전 "자주 막히는 곳"의 1·4번(환경변수 철자, Vercel에만 없음)이 여기서 사라집니다.
+</div>
+
+<hr>
+
+<h2 id="step6"><span class="step-badge">6단계</span>재배포</h2>
+<p>환경변수는 <strong>저장만으로는 화면에 반영되지 않습니다.</strong> 다시 배포해야 합니다. 웹 버전에서 가장 자주 잊는 단계입니다.</p>
+<div class="flow">다시 배포해줘</div>
+<div class="flow">production 배포를 시작했습니다. 1~2분 걸립니다.</div>
+
+<p>코드를 바꿨다면 재배포를 따로 부탁할 필요가 없습니다. GitHub에 올리면 Vercel이 자동으로 다시 배포합니다. 1·2회차에서 쓰던 그 말이면 됩니다.</p>
+<div class="flow">저장해줘</div>
+
+<hr>
+
+<h2 id="step7"><span class="step-badge">7단계</span>확인</h2>
+<div class="flow">배포 다 됐어?</div>
+<div class="flow">Ready 상태입니다.<br>
+주소: https://우리프로젝트.vercel.app</div>
+
+<p>사이트 주소를 새로고침해서 바뀐 내용이 보이면 성공입니다.</p>
+
+<div class="warn">
+  <strong>다른 사람에게 보여줄 때 로그인 화면이 뜨면</strong> 배포 보호(Deployment Protection)가 켜진 것입니다. <code>배포 보호 설정 어떻게 되어 있어?</code>라고 물어보세요. 켜져 있으면 소유자만 볼 수 있어 8교시 발표 때 곤란합니다. 강사에게 해제를 요청하세요.
+</div>
+
+<hr>
+
+<h2 id="step8"><span class="step-badge">8단계</span>막혔을 때 (MCP 버전의 가장 큰 장점)</h2>
+<p>웹 버전에서는 배포가 실패하면 Vercel 대시보드를 열고 로그를 찾아 영어 오류 메시지를 읽어야 합니다. MCP 버전에서는 이렇게 물어보면 됩니다.</p>
+<div class="flow">배포 왜 실패했어?</div>
+
+<p>Claude가 빌드 기록을 직접 읽고 원인을 쉬운 말로 알려줍니다. 실제 예를 하나 보여드립니다. <strong>이 교육 자료를 준비하면서 실제로 났던 오류</strong>입니다.</p>
+<div class="flow">빌드가 이 오류로 멈췄습니다.<br>
+<br>
+&nbsp;&nbsp;Module not found: Can't resolve '@/lib/supabase'<br>
+<br>
+원인: 프로젝트에 TypeScript 파일이 하나 있어서 Next.js가 빌드 중<br>
+tsconfig.json을 자동으로 만듭니다. 그런데 자동 생성된 파일에는<br>
+경로 별칭(@/) 설정이 빠져 있고, 이 파일이 있으면 기존<br>
+jsconfig.json 설정은 무시됩니다. 그래서 '@/lib/supabase'를<br>
+찾지 못합니다.<br>
+<br>
+고치려면 tsconfig.json에 별칭 설정을 넣고 저장소에 포함시켜야<br>
+합니다. 진행할까요?</div>
+
+<p>이 오류는 <strong>첫 빌드는 성공하고 두 번째부터 실패</strong>하는 종류여서, 로그를 직접 읽어도 원인을 짚기 어렵습니다. 웹 버전이라면 강사를 불러야 하는 상황입니다.</p>
+
+<p>이런 것도 물어볼 수 있습니다.</p>
+<div class="flow">우리 사이트 지금 잘 떠 있어?<br>
+최근 배포 목록 보여줘<br>
+사이트에서 에러 나고 있어?</div>
+
+<hr>
+
+<h2>자주 막히는 곳 (체크리스트)</h2>
+<table>
+  <thead><tr><th>순서</th><th>증상</th><th>이렇게 말하세요</th></tr></thead>
+  <tbody>
+    <tr><td>1</td><td>화면이 안 바뀜</td><td><code>다시 배포해줘</code> — 재배포 누락이 가장 흔함</td></tr>
+    <tr><td>2</td><td>값을 넣었는데 그대로</td><td><code>환경변수 뭐가 들어가 있어?</code></td></tr>
+    <tr><td>3</td><td>배포가 빨간 글씨로 실패</td><td><code>배포 왜 실패했어?</code></td></tr>
+    <tr><td>4</td><td>사이트가 열리는데 오류 화면</td><td><code>사이트에서 에러 나고 있어?</code></td></tr>
+    <tr><td>5</td><td>남에게 링크 주면 로그인 화면</td><td><code>배포 보호 설정 어떻게 되어 있어?</code></td></tr>
+    <tr><td>6</td><td>GitHub 저장소를 못 가져옴</td><td><strong>웹 버전 1단계</strong> — MCP로 해결 안 됨</td></tr>
+  </tbody>
+</table>
+<p>6번만 웹으로 돌아가야 하고, 나머지는 대화로 처리됩니다.</p>
+
+<hr>
+
+<h2>안전하게 쓰기</h2>
+<p>Vercel MCP는 기본값으로 <strong>계정 전체</strong>를 봅니다. 팀이 여러 개면 프로젝트 하나로 범위를 좁히는 편이 안전합니다.</p>
+<div class="flow">npx vercel mcp --project</div>
+
+<div class="warn">
+  이 통로에는 <strong>도메인 구매</strong> 같은 결제성 기능도 포함됩니다. <code>도메인 사줘</code> 같은 요청은 실제 결제로 이어질 수 있으니 쓰지 마세요.
+</div>
+
+<hr>
+
+<h2>웹 버전과 나란히 보기</h2>
+<table>
+  <thead><tr><th>웹 버전 단계</th><th>MCP 버전</th><th>달라지는 점</th></tr></thead>
+  <tbody>
+    <tr><td>0단계 Vercel 로그인</td><td>웹 그대로</td><td>자동화 불가</td></tr>
+    <tr><td>1단계 GitHub 연결·앱 설치</td><td>웹 그대로</td><td><strong>자동화 불가 — 가장 많이 막히는 곳</strong></td></tr>
+    <tr><td>2단계 저장소 준비</td><td>웹 그대로</td><td>자동화 불가</td></tr>
+    <tr><td>3단계 프로젝트 가져오기</td><td>웹 그대로</td><td>자동화 불가</td></tr>
+    <tr><td>4단계 배포하기</td><td>자동</td><td>Import하면 자동으로 돕니다</td></tr>
+    <tr><td>5단계 배포 확인</td><td>7단계</td><td>대시보드 → <code>배포 다 됐어?</code></td></tr>
+    <tr><td>6단계 환경변수 넣기</td><td>5단계</td><td>손으로 붙여넣기(오타 빈발) → 한 문장</td></tr>
+    <tr><td>7단계 재배포</td><td>6단계</td><td>메뉴 3번 클릭 → <code>다시 배포해줘</code></td></tr>
+    <tr><td>8단계 결과 확인</td><td>7단계</td><td>동일</td></tr>
+    <tr><td>(없음)</td><td>8단계</td><td><strong>오류 진단이 새로 생깁니다</strong></td></tr>
+  </tbody>
+</table>
+
+<hr>
+
+<h2>강사 메모</h2>
+<ul>
+  <li>본 문서는 <a href="Vercel-배포-따라하기.html">Vercel 배포 따라하기</a>(웹 클릭 버전)의 <strong>대체가 아니라 병행</strong>입니다. <a href="Curriculum.md">Curriculum.md</a> 2·3교시에 대응합니다.</li>
+  <li>같은 계열 MCP 문서: 4·5교시 <a href="Supabase-따라하기-MCP.html">Supabase 따라하기 (MCP 버전)</a>, 6교시 <a href="Supabase-로그인-글쓰기-MCP.html">로그인·글쓰기 붙이기 (MCP 버전)</a>.</li>
+  <li><strong>0~3단계는 반드시 웹으로</strong> — MCP로 대체 불가입니다. 특히 1단계(GitHub 앱 설치)는 웹 버전 문서의 빨간 경고 스크린샷을 그대로 활용하세요.</li>
+  <li><strong>환경변수 등록은 Vercel MCP 기능이 아닙니다.</strong> MCP 도구 목록에 환경변수 항목이 없어, Claude가 명령줄 도구(<code>vercel env add</code>)를 씁니다. 그래서 <strong><code>npx vercel login</code>이 선행 조건</strong>입니다. 1교시에 함께 해두면 5단계가 매끄럽습니다.</li>
+  <li><strong>8단계(오류 진단)가 이 문서의 실질적 가치입니다.</strong> 7교시 "자주 나는 오류 일괄 해결"에서 강사 1명이 8개 팀 로그를 순회하는 부담이 크게 줄어듭니다. 빠른 팀은 스스로 진단하게 두고, 강사는 진짜 막힌 팀에 집중할 수 있습니다.</li>
+  <li><strong>배포 보호를 확인해 두세요.</strong> 웹 대시보드에서 만든 프로젝트는 배포 보호가 켜져 있을 수 있어, <code>.vercel.app</code> 주소가 소유자에게만 보입니다. 8교시 발표·공유 전에 팀별로 점검이 필요합니다. MCP로 만든 프로젝트는 기본 해제 상태입니다.</li>
+  <li><strong>도메인 구매·요금제 변경 도구가 통로에 포함</strong>됩니다. 수강생에게는 "도메인·결제 관련 요청은 하지 않기"를 명시적으로 안내하세요.</li>
+  <li>8단계의 예시 오류(<code>Can't resolve '@/lib/supabase'</code>)는 실제로 발생한 것입니다. TypeScript 파일이 섞인 프로젝트에서 첫 빌드만 성공하고 이후 실패하는 형태여서, 강사도 원인을 짚기 어려운 종류입니다. 팀 저장소에 <code>.ts</code> 파일이 하나라도 있으면 <code>tsconfig.json</code>에 <code>paths</code> 설정이 들어있는지 사전 점검하는 것을 권합니다.</li>
+  <li>본 문서의 모든 단계는 실제 Vercel 프로젝트에서 검증했습니다(2026-08-17). 5단계 환경변수 등록, 6단계 재배포, 7단계 공개 주소 확인, 8단계 오류 진단이 모두 실측 결과입니다.</li>
+</ul>
+
+<footer class="doc-foot">
+  Vercel 배포 따라하기 (MCP 버전) · 상상인 교육 Lesson 3 · AXLab-154 · 2026-08
+</footer>
+
+</body>
+</html>
