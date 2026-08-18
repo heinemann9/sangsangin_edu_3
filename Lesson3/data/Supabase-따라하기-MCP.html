@@ -234,7 +234,33 @@
     <div class="flow">/mcp</div>
   </li>
   <li>목록에서 <strong>Supabase</strong>를 고르고 Enter를 누릅니다.</li>
+</ol>
+<figure>
+  <img src="../assets/mcp/17-mcp-list-supabase.png" alt="/mcp 목록에 보이는 supabase">
+  <figcaption>① 아직 인증이 안 된 supabase — Enter로 선택 (앞서 붙인 vercel은 아래에 이미 연결돼 있습니다)</figcaption>
+</figure>
+<figure>
+  <img src="../assets/mcp/18-supabase-authenticate.png" alt="supabase 서버 상세 화면">
+  <figcaption>① <strong>Authenticate</strong>를 선택하면 브라우저가 열립니다</figcaption>
+</figure>
+
+<ol start="3">
   <li>브라우저가 열리면 Supabase 계정으로 로그인하고 <strong>허용(Authorize)</strong>을 누릅니다.</li>
+</ol>
+<figure>
+  <img src="../assets/mcp/19-supabase-oauth-org.png" alt="Supabase 조직 선택 화면">
+  <figcaption>① 조직(ORGANIZATION) 목록을 열어 ② 우리 팀 조직을 고릅니다</figcaption>
+</figure>
+<figure>
+  <img src="../assets/mcp/20-supabase-oauth-authorize.png" alt="Supabase 권한 승인 화면">
+  <figcaption>① 고른 조직이 맞는지 확인하고 ② Authorize를 누릅니다 — 권한이 이 조직에만 적용됩니다</figcaption>
+</figure>
+<figure>
+  <img src="../assets/mcp/21-supabase-oauth-success.png" alt="Supabase 인증 완료 화면">
+  <figcaption>이 화면이 나오면 탭을 닫고 Claude Code로 돌아갑니다</figcaption>
+</figure>
+
+<ol start="4">
   <li>터미널로 돌아와 <code>Connected</code>라고 나오면 성공입니다.</li>
 </ol>
 
@@ -242,6 +268,10 @@
   <strong>목록에 Supabase가 없으면</strong> 아직 등록이 안 된 것입니다. 아래를 입력한 뒤 Claude Code를 <strong>종료하고 <code>claude --continue</code>로 다시 시작</strong>하면 목록에 나타납니다. (그냥 <code>claude</code>로 시작하면 대화 내용이 사라집니다.)
   <div class="flow">claude mcp add --transport http supabase https://mcp.supabase.com/mcp</div>
 </div>
+<figure>
+  <img src="../assets/mcp/15-supabase-mcp-add.png" alt="Supabase MCP 등록 명령어와 결과">
+  <figcaption>① 그대로 입력할 명령어 ② 등록은 됐지만 아직 인증 전 상태 — 위 2번으로 돌아가 인증합니다</figcaption>
+</figure>
 
 <div class="note">
   <strong>강사 포인트</strong> — 이 통로는 여러분 Supabase 계정 <strong>전체</strong>에 연결됩니다. 다른 팀 프로젝트를 실수로 건드리지 않도록, 강사가 팀별로 범위를 좁혀 등록해 줄 수 있습니다. 아래 "안전하게 쓰기" 참고.
@@ -330,6 +360,11 @@ Vercel에 등록했습니다.<br>
 &nbsp;&nbsp;NEXT_PUBLIC_SUPABASE_ANON_KEY<br>
 재배포를 시작했습니다. 1~2분 걸립니다.</div>
 
+<figure>
+  <img src="../assets/mcp/23-mcp-set-supabase-env.png" alt="MCP로 Supabase 주소와 열쇠를 Vercel 환경변수에 등록">
+  <figcaption>① 이렇게 한 줄만 말하면 ② 주소와 열쇠가 자동으로 등록됩니다</figcaption>
+</figure>
+
 <p>사람이 값을 옮기지 않으므로 <strong>철자 오타가 구조적으로 발생하지 않습니다.</strong> 웹 버전 "자주 막히는 곳" 1·4·5번(환경변수 철자, Vercel에만 없음, 재배포 안 함)이 여기서 사라집니다.</p>
 
 <div class="warn">
@@ -348,6 +383,10 @@ Vercel에 등록했습니다.<br>
   <li>우리 사이트 주소를 새로고침합니다.</li>
   <li>2단계에서 넣은 공지가 <strong>화면에 목록으로</strong> 보이면 성공입니다.</li>
 </ol>
+<figure>
+  <img src="../assets/mcp/25-site-after-env.png" alt="Supabase 데이터가 표시된 사이트">
+  <figcaption>① 환경변수로 바뀐 팀 이름 ② "환경변수 적용됨" — 아래 공지 목록이 Supabase 표에서 온 데이터입니다</figcaption>
+</figure>
 
 <p>배포가 끝났는지 궁금하면 이렇게 물어보세요.</p>
 <div class="flow">배포 다 됐어?</div>

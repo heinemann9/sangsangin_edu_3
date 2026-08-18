@@ -59,10 +59,46 @@ updatedAt: 2026-08-17
 claude mcp add --transport http --scope user vercel https://mcp.vercel.com
 ```
 
+![Vercel MCP 등록 명령어 입력](../assets/mcp/01-vercel-mcp-add-command.png)
+*① 그대로 입력할 명령어*
+
+![Vercel MCP 등록 결과](../assets/mcp/02-vercel-mcp-add-result.png)
+*① 등록 성공 ② 아직 인증 전 상태 ③ 다음에 입력할 `/mcp`*
+
 2. Claude Code를 종료하고 **`claude --continue`로 다시 시작**합니다. (그냥 `claude`로 시작하면 대화 내용이 사라집니다.)
+
+![claude --continue로 다시 시작](../assets/mcp/03-claude-continue.png)
+*① 대화를 이어서 다시 시작하는 명령어*
+
+![다시 시작한 뒤 이전 대화가 그대로 남아 있는 화면](../assets/mcp/04-claude-continue-result.png)
+*다시 시작해도 앞서 주고받은 내용이 그대로 남아 있습니다 — `--continue`를 빼면 이 부분이 사라집니다*
+
 3. `/mcp`를 입력하고 목록에서 **`vercel`**을 고릅니다.
+
+![/mcp 목록에 보이는 vercel](../assets/mcp/05-mcp-list-vercel.png)
+*① 아직 인증이 안 된 vercel — Enter로 선택*
+
+![vercel 서버 상세 화면](../assets/mcp/06-mcp-vercel-authenticate.png)
+*① **Authenticate**를 선택하면 브라우저가 열립니다*
+
 4. 브라우저가 열리면 Vercel 계정으로 **허용(Authorize)**을 누릅니다.
+
+![Vercel 권한 요청 화면 - 팀 선택 전](../assets/mcp/07-vercel-oauth-select-team.png)
+*① 팀을 먼저 골라야 합니다 ② 고르기 전에는 Allow가 눌리지 않습니다*
+
+![연결할 프로젝트 선택](../assets/mcp/08-vercel-oauth-select-project.png)
+*① 연결할 프로젝트를 고르고 ② Add를 누릅니다*
+
+![Allow 버튼이 활성화된 화면](../assets/mcp/09-vercel-oauth-allow.png)
+*① 팀이 추가되면 ② Allow가 활성화됩니다*
+
+![브라우저 인증 완료 화면](../assets/mcp/10-vercel-oauth-success.png)
+*브라우저에 이 화면이 나오면 탭을 닫고 Claude Code로 돌아갑니다*
+
 5. `Connected`가 나오면 성공입니다.
+
+![Claude Code에 표시된 연결 완료](../assets/mcp/11-vercel-mcp-connected.png)
+*① `/mcp` ② **Connected** — 여기까지 나오면 통로가 열린 것입니다*
 
 > **목록에서 이름 찾기**: `claude.ai Supabase`처럼 `claude.ai`가 붙은 것들과 달리, 이건 그냥 **`vercel`**로 목록 **맨 아래**에 보입니다.
 
@@ -72,6 +108,15 @@ claude mcp add --transport http --scope user vercel https://mcp.vercel.com
 npx vercel login
 ```
 
+![npx vercel login 실행 화면](../assets/mcp/12-vercel-login-command.png)
+*① 입력할 명령어 ② 브라우저로 열 주소 — 뒤에 붙은 코드를 확인해 둡니다*
+
+![Authorize Device 화면](../assets/mcp/13-vercel-login-authorize.png)
+*터미널에 나온 코드가 그대로 들어가 있는지 확인하고 ① Allow*
+
+![명령줄 로그인 완료](../assets/mcp/14-vercel-login-success.png)
+*이 화면이 나오면 탭을 닫아도 됩니다*
+
 > **왜 두 번 로그인하나요?** Vercel MCP는 배포 상태·오류 로그를 **읽는** 데 쓰이고, 환경변수를 **넣는** 기능은 MCP에 없어서 명령줄 도구를 씁니다. Claude가 두 가지를 알아서 나눠 쓰니 여러분은 로그인만 해두면 됩니다.
 
 ---
@@ -80,11 +125,19 @@ npx vercel login
 
 웹 버전에서 가장 오타가 많이 나는 구간입니다. 이름 한 글자만 틀려도 화면에 아무것도 안 나옵니다.
 
+넣기 전 사이트는 이런 상태입니다.
+
+![환경변수를 넣기 전 사이트](../assets/mcp/22-site-before-env.png)
+*① 아직 기본값인 팀 이름 ② "아직 설정 안 됨" 표시*
+
 Supabase까지 연결하는 경우라면 [Supabase 따라하기 (MCP 버전)](Supabase-따라하기-MCP.md)의 4단계처럼 한 줄로 끝납니다.
 
 ```
 우리 supabase 주소랑 열쇠를 vercel 환경변수에 넣어줘
 ```
+
+![MCP로 Supabase 주소와 열쇠를 환경변수에 등록](../assets/mcp/23-mcp-set-supabase-env.png)
+*① 이렇게 말하면 ② 두 값이 자동으로 등록됩니다 — 손으로 옮기지 않으니 오타가 없습니다*
 
 값을 직접 정하는 환경변수라면 이렇게 말합니다.
 
@@ -94,10 +147,8 @@ vercel 환경변수에 NEXT_PUBLIC_TEAM_NAME을 1조로 넣어줘
 
 Claude가 등록하고 확인해 줍니다.
 
-```
-등록했습니다.
-  NEXT_PUBLIC_TEAM_NAME       Production, Preview
-```
+![팀 이름 환경변수 등록 결과](../assets/mcp/24-mcp-set-team-name.png)
+*① 이렇게 말하면 ② 지금 들어가 있는 환경변수를 표로 보여줍니다*
 
 들어간 값을 확인하려면 이렇게 물어보세요. (값 자체는 가려져 나옵니다 — 정상입니다.)
 
@@ -141,6 +192,9 @@ Ready 상태입니다.
 ```
 
 사이트 주소를 새로고침해서 바뀐 내용이 보이면 성공입니다.
+
+![환경변수가 적용된 사이트](../assets/mcp/25-site-after-env.png)
+*① 팀 이름이 바뀌었고 ② "환경변수 적용됨"으로 표시가 바뀌었습니다*
 
 > **다른 사람에게 보여줄 때 로그인 화면이 뜨면** 배포 보호(Deployment Protection)가 켜진 것입니다. `배포 보호 설정 어떻게 되어 있어?`라고 물어보세요. 켜져 있으면 소유자만 볼 수 있어 8교시 발표 때 곤란합니다. 강사에게 해제를 요청하세요.
 

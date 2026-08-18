@@ -1,0 +1,7 @@
+# 스크린샷 작업용 임시 폴더 — 원본과 하이라이트 작업본 보관용, 커밋하지 않습니다.
+# 확정된 이미지는 Lesson3/assets/ 아래로 복사해 커밋합니다.
+temp_pic/
+temp_high/
+
+# Playwright 캡처 시 생기는 로그인 세션 — 절대 커밋 금지
+auth.json

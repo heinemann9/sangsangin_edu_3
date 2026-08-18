@@ -46,7 +46,24 @@ updatedAt: 2026-08-17
 ```
 
 2. 목록에서 **Supabase**를 고르고 Enter를 누릅니다.
+
+![/mcp 목록에 보이는 supabase](../assets/mcp/17-mcp-list-supabase.png)
+*① 아직 인증이 안 된 supabase — Enter로 선택 (앞서 붙인 vercel은 아래에 이미 연결돼 있습니다)*
+
+![supabase 서버 상세 화면](../assets/mcp/18-supabase-authenticate.png)
+*① **Authenticate**를 선택하면 브라우저가 열립니다*
+
 3. 브라우저가 열리면 Supabase 계정으로 로그인하고 **허용(Authorize)**을 누릅니다.
+
+![Supabase 조직 선택 화면](../assets/mcp/19-supabase-oauth-org.png)
+*① 조직(ORGANIZATION) 목록을 열어 ② 우리 팀 조직을 고릅니다*
+
+![Supabase 권한 승인 화면](../assets/mcp/20-supabase-oauth-authorize.png)
+*① 고른 조직이 맞는지 확인하고 ② Authorize를 누릅니다 — 권한이 이 조직에만 적용됩니다*
+
+![Supabase 인증 완료 화면](../assets/mcp/21-supabase-oauth-success.png)
+*이 화면이 나오면 탭을 닫고 Claude Code로 돌아갑니다*
+
 4. 터미널로 돌아와 `Connected`라고 나오면 성공입니다.
 
 > **목록에 Supabase가 없으면** 아직 등록이 안 된 것입니다. 아래를 입력한 뒤 Claude Code를 **종료하고 `claude --continue`로 다시 시작**하면 목록에 나타납니다. (그냥 `claude`로 시작하면 대화 내용이 사라집니다.)
@@ -54,6 +71,9 @@ updatedAt: 2026-08-17
 > ```
 > claude mcp add --transport http supabase https://mcp.supabase.com/mcp
 > ```
+
+![Supabase MCP 등록 명령어와 결과](../assets/mcp/15-supabase-mcp-add.png)
+*① 그대로 입력할 명령어 ② 등록은 됐지만 아직 인증 전 상태 — 위 2번으로 돌아가 인증합니다*
 
 > **강사 포인트**: 이 통로는 여러분 Supabase 계정 **전체**에 연결됩니다. 다른 팀 프로젝트를 실수로 건드리지 않도록, 강사가 팀별로 범위를 좁혀 등록해 줄 수 있습니다. 아래 "안전하게 쓰기" 참고.
 
@@ -172,6 +192,9 @@ Vercel에 등록했습니다.
 재배포를 시작했습니다. 1~2분 걸립니다.
 ```
 
+![MCP로 Supabase 주소와 열쇠를 Vercel 환경변수에 등록](../assets/mcp/23-mcp-set-supabase-env.png)
+*① 이렇게 한 줄만 말하면 ② 주소와 열쇠가 자동으로 등록됩니다*
+
 사람이 값을 옮기지 않으므로 **철자 오타가 구조적으로 발생하지 않습니다.** 웹 버전 "자주 막히는 곳" 1·4·5번(환경변수 철자, Vercel에만 없음, 재배포 안 함)이 여기서 사라집니다.
 
 > **열쇠는 두 종류가 있습니다.** `anon`(익명용, 공개해도 되는 키)과 `service_role`(관리자용 비밀 키)입니다. **anon만** 사이트에 넣습니다. Claude에게 맡기면 알아서 anon을 씁니다. 직접 다룰 때는 이름에 `anon`이 있는 것만 쓰세요.
@@ -185,6 +208,9 @@ Vercel에 등록했습니다.
 1. 1~2분 기다립니다.
 2. 우리 사이트 주소를 새로고침합니다.
 3. 2단계에서 넣은 공지가 **화면에 목록으로** 보이면 성공입니다.
+
+![Supabase 데이터가 표시된 사이트](../assets/mcp/25-site-after-env.png)
+*① 환경변수로 바뀐 팀 이름 ② "환경변수 적용됨" — 아래 공지 목록이 Supabase 표에서 온 데이터입니다*
 
 배포가 끝났는지 궁금하면 이렇게 물어보세요.
 
