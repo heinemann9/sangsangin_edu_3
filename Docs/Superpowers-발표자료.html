@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Superpowers — 뭐가 좋고, 어떻게 쓰나</title>
+<style>
+  :root {
+    --bg: #0e1015;
+    --panel: #161a22;
+    --fg: #eef1f6;
+    --dim: #9aa4b2;
+    --line: #2a303c;
+    --ac: #a78bfa;
+    --ac2: #7c5cff;
+    --ok: #4ade80;
+    --no: #f87171;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; }
+  body {
+    background: var(--bg); color: var(--fg);
+    font-family: -apple-system, BlinkMacSystemFont, "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+    word-break: keep-all; overflow: hidden;
+  }
+
+  .deck { height: 100vh; display: flex; align-items: center; justify-content: center; padding: 3vh 4vw; }
+  .slide { display: none; width: 100%; max-width: 1000px; }
+  .slide.on { display: block; animation: in .22s ease-out; }
+  @keyframes in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+
+  .kicker {
+    display: inline-block; font-size: 0.78rem; font-weight: 800; letter-spacing: .12em;
+    color: var(--ac); border: 1px solid var(--ac); border-radius: 999px; padding: 3px 13px; margin-bottom: 22px;
+  }
+  h1 { font-size: clamp(2.2rem, 5.5vw, 3.6rem); line-height: 1.15; letter-spacing: -0.03em; font-weight: 800; }
+  h2 { font-size: clamp(1.5rem, 3.4vw, 2.3rem); line-height: 1.25; letter-spacing: -0.02em; font-weight: 800; margin-bottom: 28px; }
+  h2 em { color: var(--ac); font-style: normal; }
+  .sub { color: var(--dim); font-size: clamp(1rem, 1.7vw, 1.2rem); margin-top: 18px; line-height: 1.6; }
+  .sub b { color: var(--fg); }
+
+  .grid { display: grid; gap: 14px; }
+  .g2 { grid-template-columns: 1fr 1fr; }
+  .g3 { grid-template-columns: repeat(3, 1fr); }
+  .card { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 20px 22px; }
+  .card .n { font-size: 0.72rem; font-weight: 800; color: var(--ac); letter-spacing: .1em; }
+  .card b { display: block; font-size: clamp(1.02rem, 1.6vw, 1.2rem); margin: 8px 0 8px; }
+  .card p { color: var(--dim); font-size: clamp(0.86rem, 1.18vw, 1rem); line-height: 1.55; }
+  .card p.hi { color: var(--fg); }
+
+  .rows { display: grid; gap: 10px; }
+  .row { display: grid; grid-template-columns: 190px 1fr; gap: 18px; align-items: start;
+         background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 15px 19px; }
+  .row .k { font-weight: 800; color: var(--ac); font-size: clamp(0.9rem, 1.3vw, 1.05rem); }
+  .row .v { color: var(--dim); font-size: clamp(0.88rem, 1.2vw, 1rem); line-height: 1.55; }
+  .row .v b { color: var(--fg); }
+
+  .flow { display: flex; align-items: stretch; gap: 10px; }
+  .flow .step { flex: 1; background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 18px 14px; text-align: center; }
+  .flow .step .n { font-size: 0.7rem; font-weight: 800; color: var(--ac); letter-spacing: .1em; }
+  .flow .step b { display: block; margin: 8px 0 6px; font-size: clamp(0.95rem, 1.4vw, 1.1rem); }
+  .flow .step p { color: var(--dim); font-size: clamp(0.78rem, 1.05vw, 0.9rem); line-height: 1.5; }
+  .flow .arw { display: flex; align-items: center; color: var(--line); font-size: 1.4rem; }
+
+  .quote {
+    border-left: 3px solid var(--ac); padding: 12px 0 12px 20px; margin: 24px 0 0;
+    font-size: clamp(1.05rem, 1.9vw, 1.35rem); line-height: 1.5; font-weight: 700;
+  }
+  .quote small { display: block; font-weight: 400; font-size: 0.72em; color: var(--dim); margin-top: 8px; }
+
+  .say { background: var(--panel); border: 1px solid var(--line); border-left: 3px solid var(--ac); border-radius: 0 10px 10px 0; padding: 14px 19px; }
+  .say small { display: block; color: var(--ac); font-weight: 800; font-size: 0.75rem; letter-spacing: .06em; margin-bottom: 5px; }
+  .say span { font-size: clamp(0.98rem, 1.45vw, 1.15rem); }
+
+  ul.plain { list-style: none; }
+  ul.plain li { position: relative; padding-left: 22px; margin: 10px 0; color: var(--dim); font-size: clamp(0.88rem, 1.22vw, 1.02rem); line-height: 1.55; }
+  ul.plain li::before { content: "·"; position: absolute; left: 5px; color: var(--ac); font-weight: 800; }
+  ul.plain li b { color: var(--fg); }
+  ul.plain li.no::before { content: "×"; color: var(--no); font-size: .85em; }
+  ul.plain li.ok::before { content: "✓"; color: var(--ok); font-size: .85em; }
+
+  code { background: #202634; border: 1px solid var(--line); border-radius: 5px; padding: 2px 7px; font-family: ui-monospace, Menlo, Consolas, monospace; font-size: 0.86em; }
+
+  .hud { position: fixed; bottom: 16px; right: 22px; color: var(--dim); font-size: 0.8rem; letter-spacing: .05em; }
+  .hud b { color: var(--fg); }
+  .hint { position: fixed; bottom: 16px; left: 22px; color: #4b5361; font-size: 0.76rem; }
+  .bar { position: fixed; top: 0; left: 0; height: 3px; background: var(--ac2); transition: width .22s; }
+
+  @media print {
+    body { background: #fff; color: #111; overflow: visible; }
+    .deck { display: block; height: auto; padding: 0; }
+    .slide { display: block !important; page-break-after: always; padding: 12mm; max-width: none; }
+    .hud, .hint, .bar { display: none; }
+    .card, .row, .say, .flow .step { background: #f6f7f9; border-color: #d8dce3; }
+    .card p, .row .v, ul.plain li, .flow .step p { color: #444; }
+    .sub, .quote small { color: #555; }
+  }
+</style>
+</head>
+<body>
+
+<div class="bar" id="bar"></div>
+<div class="deck">
+
+  <!-- 1 -->
+  <section class="slide on">
+    <span class="kicker">SUPERPOWERS</span>
+    <h1>지난 시간에 배운 그 <span style="color:var(--ac)">방식</span>,<br>이미 만들어 둔 사람이 있다</h1>
+    <p class="sub">
+      코딩 에이전트용 오픈소스 플러그인 · 설치 한 줄<br>
+      github.com/obra/superpowers · MIT
+    </p>
+  </section>
+
+  <!-- 2 -->
+  <section class="slide">
+    <span class="kicker">무엇인가</span>
+    <h2>스킬 <em>14종</em>을 묶어 놓은 것</h2>
+    <div class="grid g2">
+      <div class="card">
+        <span class="n">지난 시간</span>
+        <b>직접 만든다</b>
+        <p>일하는 규칙과 절차를 스킬로 하나씩 쌓아 나만의 방식을 만든다</p>
+      </div>
+      <div class="card" style="border-color:var(--ac)">
+        <span class="n">SUPERPOWERS</span>
+        <b>이미 만들어져 있다</b>
+        <p class="hi">설계 · 계획 · 테스트 · 리뷰 · 검증 절차가 스킬로 완성된 상태. 설치하면 끝</p>
+      </div>
+    </div>
+    <p class="sub">둘은 경쟁 관계가 아니다. <b>남이 만든 걸 먼저 써보고, 내 방식은 그 위에 얹으면 된다.</b></p>
+  </section>
+
+  <!-- 3 -->
+  <section class="slide">
+    <span class="kicker">장점</span>
+    <h2>좋은 점 <em>세 가지</em></h2>
+    <div class="grid g3">
+      <div class="card">
+        <span class="n">01</span><b>묻고 시작한다</b>
+        <p>바로 코드를 쓰지 않는다. 질문을 하나씩 던져 <b style="color:var(--fg)">무엇을 만들지</b> 먼저 맞춘다</p>
+      </div>
+      <div class="card">
+        <span class="n">02</span><b>계획이 남는다</b>
+        <p>설계와 계획이 <b style="color:var(--fg)">파일로 저장</b>된다. 세션이 끊겨도 이어서 하고, 그대로 인수인계된다</p>
+      </div>
+      <div class="card">
+        <span class="n">03</span><b>증거로 말한다</b>
+        <p>"됐습니다" 대신 <b style="color:var(--fg)">무엇을 돌렸고 결과가 뭐였는지</b>를 내놓는다</p>
+      </div>
+    </div>
+    <p class="sub">그리고 <b>외울 게 없다</b> — 스킬이 알아서 발동한다. 설치 후 평소처럼 쓰면 된다.</p>
+  </section>
+
+  <!-- 4 -->
+  <section class="slide">
+    <span class="kicker">어떻게 도나</span>
+    <h2>이 순서로 알아서 굴러간다</h2>
+    <div class="flow">
+      <div class="step"><span class="n">01</span><b>묻는다</b><p>질문으로<br>요구사항 정리</p></div>
+      <div class="arw">→</div>
+      <div class="step"><span class="n">02</span><b>계획한다</b><p>작업을 잘게<br>쪼개 문서로</p></div>
+      <div class="arw">→</div>
+      <div class="step"><span class="n">03</span><b>만든다</b><p>작업마다<br>리뷰가 붙는다</p></div>
+      <div class="arw">→</div>
+      <div class="step"><span class="n">04</span><b>검증한다</b><p>증거를 내고<br>완료를 말한다</p></div>
+    </div>
+    <div class="quote">
+      내가 할 일은 세 가지뿐 —
+      <span style="color:var(--ac)">질문에 답하고, 문서를 승인하고, 증거를 요구한다.</span>
+      <small>설계·계획 문서는 한국어 문장이다. 코드는 안 읽어도 된다.</small>
+    </div>
+  </section>
+
+  <!-- 5 -->
+  <section class="slide">
+    <span class="kicker">실전</span>
+    <h2>이 <em>세 문장</em>만 쓰면 된다</h2>
+    <div class="say"><small>시작할 때</small><span>계속 물어봐. 내가 놓친 게 뭔지 네가 찾아내는 게 목적이야.</span></div>
+    <div class="say" style="margin-top:12px"><small>계획을 받았을 때</small><span>내가 말하지 않았는데 계획에 들어간 항목만 따로 뽑아줘.</span></div>
+    <div class="say" style="margin-top:12px"><small>다 됐다고 할 때</small><span>내가 직접 확인할 수 있게, 어디를 열어서 뭘 누르면 되는지 알려줘.</span></div>
+    <p class="sub">특히 두 번째 — AI는 친절해서 <b>안 시킨 기능을 얹는다.</b> 계획서에서 지우면 1초, 만든 뒤 걷어내면 하루다.</p>
+  </section>
+
+  <!-- 6 -->
+  <section class="slide">
+    <span class="kicker">주의</span>
+    <h2>언제 쓰고, 언제 안 쓰나</h2>
+    <div class="grid g2">
+      <div class="card" style="border-color:var(--ok)">
+        <b style="color:var(--ok)">쓸 때</b>
+        <ul class="plain" style="margin-top:4px">
+          <li class="ok">결과물이 <b>남는</b> 일</li>
+          <li class="ok">며칠 이상 <b>이어서 할</b> 일</li>
+          <li class="ok">남에게 <b>넘기거나 보고할</b> 일</li>
+        </ul>
+      </div>
+      <div class="card">
+        <b style="color:var(--no)">안 쓸 때</b>
+        <ul class="plain" style="margin-top:4px">
+          <li class="no">오타 수정, 문구 변경</li>
+          <li class="no">질문·조사·확인</li>
+          <li class="no">5분 보고 버릴 실험</li>
+        </ul>
+      </div>
+    </div>
+    <p class="sub">질문·설계·계획이 다 <b>실제 시간</b>이다. 30분이 1시간이 되는 대신 <b>3시간짜리 재작업이 사라진다.</b> 작은 일에는 과하다.</p>
+  </section>
+
+  <!-- 7 -->
+  <section class="slide">
+    <span class="kicker">시작하기</span>
+    <h2>설치는 <em>한 줄</em></h2>
+    <div class="say" style="border-left-color:var(--ok)">
+      <small style="color:var(--ok)">Claude Code</small>
+      <span><code>/plugin install superpowers@claude-plugins-official</code></span>
+    </div>
+    <div class="rows" style="margin-top:22px">
+      <div class="row"><span class="k">그다음은</span><span class="v">평소처럼 쓰면 된다. <b>스킬이 알아서 발동</b>한다</span></div>
+      <div class="row"><span class="k">처음 한 번은</span><span class="v"><b>버려도 되는 작은 것</b>으로 끝까지 한 바퀴. 결과물이 아니라 흐름을 겪는 게 목적</span></div>
+      <div class="row"><span class="k">참고</span><span class="v">Cursor · Codex · Copilot CLI 등 다른 도구용 설치법도 저장소에 있다</span></div>
+    </div>
+    <div class="quote">
+      가장 흔한 실수는 <span style="color:var(--no)">"그냥 알아서 빨리 만들어줘"</span>
+      <small>질문이 귀찮은 건 고장이 아니라 기능이다. 그 질문이 결과를 바꾼다.</small>
+    </div>
+  </section>
+
+</div>
+
+<div class="hint">← → 또는 Space · F 전체화면 · P 인쇄(PDF)</div>
+<div class="hud"><b id="cur">1</b> / <span id="tot">7</span></div>
+
+<script>
+  const slides = [...document.querySelectorAll('.slide')];
+  const bar = document.getElementById('bar');
+  const cur = document.getElementById('cur');
+  document.getElementById('tot').textContent = slides.length;
+  let i = 0;
+  function go(n) {
+    i = Math.max(0, Math.min(slides.length - 1, n));
+    slides.forEach((s, k) => s.classList.toggle('on', k === i));
+    cur.textContent = i + 1;
+    bar.style.width = ((i + 1) / slides.length * 100) + '%';
+    location.hash = i + 1;
+  }
+  document.addEventListener('keydown', e => {
+    if (['ArrowRight', ' ', 'PageDown', 'ArrowDown'].includes(e.key)) { e.preventDefault(); go(i + 1); }
+    else if (['ArrowLeft', 'PageUp', 'ArrowUp'].includes(e.key)) { e.preventDefault(); go(i - 1); }
+    else if (e.key === 'Home') go(0);
+    else if (e.key === 'End') go(slides.length - 1);
+    else if (e.key.toLowerCase() === 'f') { document.fullscreenElement ? document.exitFullscreen() : document.documentElement.requestFullscreen(); }
+    else if (e.key.toLowerCase() === 'p') { e.preventDefault(); window.print(); }
+  });
+  document.querySelector('.deck').addEventListener('click', e => go(i + (e.clientX < innerWidth * 0.25 ? -1 : 1)));
+  const start = parseInt(location.hash.slice(1), 10);
+  go(Number.isFinite(start) && start > 0 ? start - 1 : 0);
+</script>
+
+</body>
+</html>

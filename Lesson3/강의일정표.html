@@ -64,7 +64,7 @@
 
 <table class="ov">
   <tr><td class="k">회차</td><td>3회차 (마지막) — 서비스 배포 &amp; 발표</td></tr>
-  <tr><td class="k">담당</td><td>강신안 · 최완규(외부인원)</td></tr>
+  <tr><td class="k">담당</td><td>강사 강신안 · 최완규(외부인원) · <b>개회(09:00–09:30) 대표님</b></td></tr>
   <tr><td class="k">장소 / 대상</td><td>여의도 · 8명 2개 조 (다수 비개발자)</td></tr>
   <tr><td class="k">구성 원칙</td><td><b>오전(3h)</b> 강사 시연 + 공통 샘플로 Vercel·Supabase 따라하기 — 전원 같은 속도<br><b>오후(5h)</b> 오전에 익힌 절차를 각자 팀 프로젝트에 적용 — 강사 2인이 조를 나눠 순회</td></tr>
   <tr><td class="k">도구</td><td>GitHub · Vercel(배포) · Supabase(데이터) · Claude Code + MCP(Vercel · Supabase)</td></tr>
@@ -78,29 +78,31 @@
     <tr><th class="tm">시간</th><th class="gb">구분</th><th>내용</th></tr>
 
     <tr>
-      <td class="tm">09:00–09:30</td><td class="gb">이론</td>
-      <td><b>오늘의 흐름 &amp; 배포·데이터란 무엇인가</b><br>
-      내 컴퓨터에서만 보이던 사이트를 인터넷 주소로 올리는 것이 <b>배포</b>(Vercel), 그 사이트가 쓰는 정보를 보관하는 곳이 <b>데이터 저장소</b>(Supabase).<br>
-      오늘 구조 안내 — 오전엔 전원 같은 샘플로 손에 익히고, 오후엔 그대로 우리 프로젝트에 적용한다</td>
+      <td class="tm">09:00–09:30</td><td class="gb">개회</td>
+      <td><b>대표님 인사</b> — 오늘 목표 · 향후 진행 안내 · 강사 2인 소개<br>
+      "오늘은 인터넷에 올리는 것까지가 목표" — 범위에 대한 기준선을 여기서 잡아준다</td>
     </tr>
 
     <tr>
       <td class="tm">09:30–10:00</td><td class="gb">MCP 연결</td>
-      <td><b>통로 열기</b> — <code>claude mcp add</code> 2개(vercel · supabase) → 재시작 → <code>/mcp</code> 인증(브라우저 OAuth) → <code>npx vercel login</code><br>
+      <td>(첫 2분) 오전·오후 구조 안내 — 오전엔 전원 같은 샘플로 손에 익히고, 오후엔 그대로 우리 프로젝트에 적용한다<br>
+      <b>통로 열기</b> — <code>claude mcp add</code> 2개(vercel · supabase) → 재시작 → <code>/mcp</code> 인증(브라우저 OAuth) → <code>npx vercel login</code><br>
       이론 5분 — 클릭 대신 말로 시키려면 통로가 필요하다. 도구 수만큼 연동(M×N) → MCP 하나면 충분(M+N)<br>
       먼저 끝낸 사람이 옆자리를 돕는다. 30분 안에 안 되면 웹 화면으로 진행하고 점심시간에 개별 처리</td>
     </tr>
 
     <tr>
       <td class="tm">10:00–11:00</td><td class="gb">따라하기 ①</td>
-      <td><b>Vercel 배포 따라하기</b> — 강사가 앞에서 한 단계씩, 수강생은 같은 화면을 따라온다<br>
+      <td>(첫 3분) <b>배포란</b> — 내 컴퓨터에서만 보이던 사이트를 인터넷 주소로 올려 누구나 볼 수 있게 하는 것<br>
+      <b>Vercel 배포 따라하기</b> — 강사가 앞에서 한 단계씩, 수강생은 같은 화면을 따라온다<br>
       GitHub 저장소 연결 → Deploy → <code>*.vercel.app</code> 주소 확인 → 휴대폰으로도 열어보기 → 코드 수정 후 자동 재배포<br>
       빌드 로그 읽는 법 · 환경변수가 무엇이고 왜 코드에 직접 쓰면 안 되는지</td>
     </tr>
 
     <tr class="cp">
       <td class="tm">11:00–12:00</td><td class="gb">따라하기 ②</td>
-      <td><b>Supabase 데이터 따라하기</b> — 프로젝트 생성 → 표(테이블) 만들기 → 데이터 몇 줄 입력 → 읽기 공개 정책(RLS) → 주소·열쇠를 환경변수에 넣고 재배포 → <b>화면에 데이터가 나오는 것까지 확인</b><br>
+      <td>(첫 3분) <b>데이터 저장소란</b> — 사이트가 쓰는 정보를 보관하는 곳. 표(테이블) = 엑셀 시트 한 장<br>
+      <b>Supabase 데이터 따라하기</b> — 프로젝트 생성 → 표(테이블) 만들기 → 데이터 몇 줄 입력 → 읽기 공개 정책(RLS) → 주소·열쇠를 환경변수에 넣고 재배포 → <b>화면에 데이터가 나오는 것까지 확인</b><br>
       "표 = 엑셀 시트 한 장" 비유. 열 이름은 영어 소문자로 <span class="ck">오전 체크포인트: 전원이 여기까지 성공</span></td>
     </tr>
   </table>
