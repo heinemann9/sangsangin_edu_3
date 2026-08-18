@@ -5,3 +5,4 @@ temp_high/
 
 # Playwright 캡처 시 생기는 로그인 세션 — 절대 커밋 금지
 auth.json
+.DS_Store
