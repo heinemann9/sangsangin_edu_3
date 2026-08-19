@@ -203,6 +203,11 @@
 
 <nav class="toc">
   <h2>전체 흐름</h2>
+  <p style="margin:0 0 6px;font-size:0.92em;color:#59636e">시작 전 준비 — 처음 한 번만 (다음 실습부터는 건너뜁니다)</p>
+  <ul style="margin:0 0 12px 1.2em">
+    <li><a href="#prep-a">Supabase 계정 만들기</a></li>
+    <li><a href="#prep-b">프로젝트 만들기</a></li>
+  </ul>
   <ol>
     <li><a href="#step0">통로 열기 (MCP 연결)</a></li>
     <li><a href="#step1">표 만들기</a></li>
@@ -217,13 +222,75 @@
 <ul>
   <li><strong>Claude Code</strong>가 설치되어 실행되는 상태 (1회차에서 준비 완료)</li>
   <li><strong>팀 프로젝트 폴더</strong>에서 Claude Code를 열어둔 상태</li>
-  <li><strong>Supabase 계정</strong> (GitHub으로 가입 가능)</li>
+  <li><strong>GitHub 계정</strong> — Supabase 계정과 프로젝트는 아래 <a href="#prep">시작 전 준비</a>에서 직접 만듭니다</li>
   <li><a href="Vercel-배포-따라하기-웹버전-참고용.html">Vercel 배포 따라하기</a> 완료 — 사이트가 <code>주소.vercel.app</code>으로 떠 있어야 합니다</li>
 </ul>
 
-<p>전체 흐름은 이렇게 5단계입니다. 웹 버전 7단계가 5단계로 줄었습니다.</p>
-<div class="flow">0. 통로 열기(MCP 연결) → 1. 표 만들기 → 2. 데이터 넣기<br>
+<p><strong>처음 한 번만</strong> 계정과 프로젝트를 만들고, 그 뒤 본 실습은 <strong>5단계</strong>입니다. 웹 버전에서 7단계에 걸쳐 클릭하던 일이 5단계로 줄었습니다.</p>
+<div class="flow">[처음 한 번] A. 계정 만들기 → B. 프로젝트 만들기<br>
+0. 통로 열기(MCP 연결) → 1. 표 만들기 → 2. 데이터 넣기<br>
 &nbsp;&nbsp;&nbsp;→ 3. 읽기 공개 정책 → 4. 사이트에 연결 → 5. 화면 확인</div>
+
+<hr>
+
+<h2 id="prep">시작 전 준비 <small>(처음 한 번만 · 웹 화면에서)</small></h2>
+<p>계정을 만들고 데이터가 담길 <strong>프로젝트</strong>를 하나 만듭니다. 이 두 가지는 사람이 직접 해야 하는 일이라 웹 화면에서 진행합니다. <strong>한 번 해두면 다음 실습부터는 건너뜁니다.</strong></p>
+
+<h3 id="prep-a">A. Supabase 계정 만들기</h3>
+<ol>
+  <li>브라우저에서 <a href="https://supabase.com" target="_blank" rel="noopener">https://supabase.com</a> 에 접속합니다.</li>
+  <li><strong>Start your project</strong> 또는 <strong>Sign In</strong> → <strong>Continue with GitHub</strong>(GitHub로 계속)를 누릅니다.</li>
+  <li>GitHub 로그인 창이 뜨면 여러분의 GitHub 계정으로 로그인·허용합니다.</li>
+</ol>
+<figure>
+  <img src="assets/supabase/01-login.png" alt="Supabase 로그인 화면">
+  <figcaption>Supabase 로그인 화면</figcaption>
+</figure>
+<figure>
+  <img src="assets/supabase/01b-github-login-google.png" alt="GitHub 로그인 창">
+  <figcaption>GitHub 로그인 창 (Google 계정으로 로그인하는 경우)</figcaption>
+</figure>
+<figure>
+  <img src="assets/supabase/01c-authorize-supabase.png" alt="Supabase 접근 허용 화면">
+  <figcaption>Supabase의 GitHub 접근 허용 화면</figcaption>
+</figure>
+<figure>
+  <img src="assets/supabase/01d-new-organization.png" alt="새 조직 만들기 화면">
+  <figcaption>처음 로그인하면 뜨는 조직(Organization) 만들기 화면</figcaption>
+</figure>
+<div class="note">GitHub로 가입하면 Vercel 때 쓴 계정과 같아 헷갈리지 않습니다. 이메일 가입도 가능합니다. <strong>조직(Organization)은 꼭 하나 만들어 두세요</strong> — 0단계에서 통로를 열 때 이 조직을 고르게 됩니다.</div>
+
+<h3 id="prep-b">B. 프로젝트 만들기 (New Project)</h3>
+<p><strong>프로젝트</strong> = 우리 팀의 데이터가 담길 하나의 상자입니다. 팀마다 하나씩 만듭니다.</p>
+<ol>
+  <li>대시보드에서 <strong>New Project</strong>(새 프로젝트)를 누릅니다. (조직(Organization)을 먼저 고르라고 하면 있는 것 하나를 고르거나 새로 만듭니다.)</li>
+  <li>입력칸을 채웁니다.
+    <ul>
+      <li><strong>Name</strong>(이름): 팀 이름 등 알아보기 쉬운 이름 (예: <code>1jo-site</code>)</li>
+      <li><strong>Database Password</strong>(데이터베이스 비밀번호): 자동 생성 버튼을 눌러도 됩니다. <strong>반드시 메모해 둡니다.</strong></li>
+      <li><strong>Region</strong>(지역): 가까운 곳 — <strong>Northeast Asia (Seoul)</strong> 권장</li>
+    </ul>
+  </li>
+</ol>
+<figure>
+  <img src="assets/supabase/02-new-project.png" alt="프로젝트 생성 화면">
+  <figcaption>프로젝트 생성 화면</figcaption>
+</figure>
+<figure>
+  <img src="assets/supabase/02b-db-password.png" alt="Database Password 입력칸">
+  <figcaption>Database Password 자동 생성 버튼</figcaption>
+</figure>
+<ol start="3">
+  <li><strong>Create new project</strong>(프로젝트 생성)를 누릅니다. 준비되는 데 <strong>1~2분</strong> 걸립니다.</li>
+</ol>
+<figure>
+  <img src="assets/supabase/02d-project-ready.png" alt="프로젝트 준비 완료 화면">
+  <figcaption>준비가 끝나 Healthy 상태가 된 화면</figcaption>
+</figure>
+<div class="warn">
+  <strong>중요</strong> — Database Password는 나중에 찾기 어렵습니다. 팀 메모장에 적어 두세요. (이 데모에서 직접 쓰진 않지만 분실하면 곤란합니다.)
+</div>
+<div class="note">여기까지가 웹 화면에서 하는 전부입니다. <strong>0단계부터는 Claude Code 창에서 말로 진행합니다.</strong></div>
 
 <hr>
 
@@ -437,7 +504,7 @@ Vercel에 등록했습니다.<br>
 <table>
   <thead><tr><th>웹 버전 단계</th><th>MCP 버전</th><th>달라지는 점</th></tr></thead>
   <tbody>
-    <tr><td>1단계 프로젝트 만들기</td><td>(강사 사전 준비)</td><td>강사가 팀별로 미리 만들어 둡니다</td></tr>
+    <tr><td>0단계 로그인 · 1단계 프로젝트 만들기</td><td>시작 전 준비 A·B</td><td>같은 절차 (처음 한 번만)</td></tr>
     <tr><td>2단계 표 만들기</td><td>1단계</td><td>열을 하나하나 추가 → 한 문장</td></tr>
     <tr><td>3단계 데이터 넣기</td><td>2단계</td><td>Insert row 반복 → 한 번에</td></tr>
     <tr><td>RLS 공개 정책</td><td>3단계</td><td>메뉴를 찾아 들어감 → 한 문장</td></tr>
@@ -447,8 +514,6 @@ Vercel에 등록했습니다.<br>
     <tr><td>7단계 재배포·확인</td><td>4·5단계</td><td>대시보드 클릭 → 한 문장</td></tr>
   </tbody>
 </table>
-
-
 
 <footer class="doc-foot">
   Supabase 따라하기 (MCP 버전) · 상상인 교육 Lesson 3 · AXLab-154 · 2026-08
