@@ -187,8 +187,8 @@
   <h2>전체 흐름</h2>
   <ol>
     <li><a href="#step0">Vercel 로그인 (GitHub로 가입)</a></li>
-    <li><a href="#step1">GitHub 연결 + Vercel 앱 설치</a></li>
-    <li><a href="#step2">내 저장소 만들기 (미러링)</a></li>
+    <li><a href="#step1">내 저장소 만들기 (미러링)</a></li>
+    <li><a href="#step2">GitHub 연결 + Vercel 앱 설치</a></li>
     <li><a href="#step3">프로젝트 가져오기 (Import)</a></li>
     <li><a href="#step4">배포하기 (Deploy)</a></li>
     <li><a href="#step5">배포된 사이트 확인</a></li>
@@ -200,15 +200,17 @@
 
 <h2>준비물</h2>
 <ul>
-  <li><strong>GitHub 계정</strong> (저장소는 2단계에서 강사 저장소를 복사해 직접 만듭니다)</li>
-  <li><strong>강사가 알려준 튜토리얼 저장소 주소</strong> (2단계에서 복사할 원본)</li>
+  <li><strong>GitHub 계정</strong> (저장소는 1단계에서 강사 저장소를 복사해 직접 만듭니다)</li>
+  <li><strong>강사가 알려준 튜토리얼 저장소 주소</strong> (1단계에서 복사할 원본)</li>
   <li><strong>이메일</strong> (Vercel 가입용 — GitHub로 바로 가입 가능)</li>
   <li>웹 브라우저 (크롬 권장)</li>
+  <li><strong>Claude Code</strong> — 1단계의 저장소 복사(미러링) 한 곳에서만 씁니다. 나머지는 전부 웹 화면입니다.</li>
 </ul>
 
 <p>전체 흐름은 이렇게 8단계입니다.</p>
-<div class="flow">0. Vercel 로그인 → 1. GitHub 연결·설치 → 2. 내 저장소 만들기(미러링) → 3. 프로젝트 가져오기(Import)<br>
+<div class="flow">0. Vercel 로그인 → 1. 내 저장소 만들기(미러링) → 2. GitHub 연결·설치 → 3. 프로젝트 가져오기(Import)<br>
 &nbsp;&nbsp;&nbsp;→ 4. 배포(Deploy) → 5. 사이트 확인 → 6. 환경변수 넣기 → 7. 다시 배포 → 8. 결과 확인</div>
+<div class="note"><strong>저장소를 먼저 만드는 이유</strong> — 2단계에서 Vercel에 GitHub를 연결할 때, 가져올 저장소가 <strong>이미 있어야</strong> 접근 권한을 그 저장소에 바로 줄 수 있습니다. 순서가 반대면 빈 목록을 보고 다시 돌아와야 합니다.</div>
 
 <hr>
 
@@ -222,40 +224,7 @@
 
 <hr>
 
-<h2 id="step1"><span class="step-badge">1단계</span>GitHub 연결 + Vercel 앱 설치 <small>(가장 많이 막히는 곳)</small></h2>
-<p>Vercel이 우리 GitHub 저장소를 가져오려면, <strong>"Vercel이 내 GitHub를 봐도 된다"고 한 번 허락</strong>해줘야 합니다. 이 허락이 안 돼 있으면 다음 단계에서 저장소가 안 보이거나 빨간 경고가 뜹니다.</p>
-<ol>
-  <li>새 프로젝트를 만들기 위해 <strong>Add New… → Project</strong>로 들어갑니다.</li>
-</ol>
-<figure>
-  <img src="../assets/vercel/00-add-new-project.png" alt="Add New 버튼과 Project 메뉴">
-  <figcaption>① Add New… 버튼 → ② Project 선택</figcaption>
-</figure>
-<ol start="2">
-  <li><strong>Import Git Repository</strong>(Git 저장소 가져오기) 영역에서 <strong>Continue with GitHub</strong>를 누릅니다.</li>
-</ol>
-<figure>
-  <img src="../assets/vercel/01-git-connect.png" alt="Git 제공자 연결 화면">
-  <figcaption>Git 제공자 연결 화면</figcaption>
-</figure>
-<ol start="3">
-  <li>GitHub 화면으로 넘어가면 <strong>Install / Authorize Vercel</strong>(설치·허용)을 누릅니다.
-    <ul>
-      <li>저장소 접근 범위는 <strong>All repositories</strong>(전체) 또는 <strong>Only select repositories</strong>(특정 저장소만 — 우리 팀 저장소 선택) 중 하나를 고릅니다.</li>
-    </ul>
-  </li>
-</ol>
-<div class="warn">
-  <strong>자주 나는 함정</strong> — 저장소를 가져오려 할 때 <strong>"To link a GitHub repository, you need to install the GitHub integration first"</strong> 라는 빨간 경고가 보이면, 그 저장소가 있는 계정(개인 계정 또는 조직)에 <strong>Vercel 앱이 아직 설치 안 된 것</strong>입니다. 위 1~3번처럼 그 계정에 Vercel을 한 번 설치하면 해결됩니다.
-</div>
-<figure>
-  <img src="../assets/vercel/02-install-warning.png" alt="설치가 필요하다는 경고">
-  <figcaption>설치가 필요하다는 경고</figcaption>
-</figure>
-
-<hr>
-
-<h2 id="step2"><span class="step-badge">2단계</span>내 저장소 만들기 (미러링) <small>(강사 저장소 → 내 저장소)</small></h2>
+<h2 id="step1"><span class="step-badge">1단계</span>내 저장소 만들기 (미러링) <small>(강사 저장소 → 내 저장소)</small></h2>
 <p>강사가 만들어 둔 튜토리얼 저장소를 <strong>통째로 복사해서 내 저장소로 만드는</strong> 과정입니다. 이걸 <strong>미러링(mirroring)</strong>이라고 합니다. Vercel은 <strong>내 저장소</strong>만 가져올 수 있고, 앞으로 코드를 고치려면 내 것이어야 하기 때문입니다.</p>
 <ol>
   <li>GitHub 홈에서 왼쪽 위 초록색 <strong>New</strong>(새로 만들기) 버튼을 누릅니다.</li>
@@ -300,16 +269,51 @@
 
 <hr>
 
-<h2 id="step3"><span class="step-badge">3단계</span>프로젝트 가져오기 (Import)</h2>
-<p>연결이 끝나면 우리 저장소를 고를 수 있습니다.</p>
+<h2 id="step2"><span class="step-badge">2단계</span>GitHub 연결 + Vercel 앱 설치 <small>(가장 많이 막히는 곳)</small></h2>
+<p>Vercel이 방금 만든 <code>vercel-test</code>를 가져오려면, <strong>"Vercel이 내 GitHub를 봐도 된다"고 한 번 허락</strong>해줘야 합니다. 이 허락이 안 돼 있으면 다음 단계에서 저장소가 안 보이거나 빨간 경고가 뜹니다.</p>
+<div class="note">여기서 여는 화면이 <strong>3단계까지 그대로 이어집니다.</strong> 연결이 끝나면 같은 화면에서 바로 <code>vercel-test</code>를 고르게 되니, 중간에 닫지 마세요.</div>
 <ol>
-  <li>Vercel에서 <strong>Add New… → Project</strong>로 들어가면 <strong>Import Git Repository</strong> 목록에 방금 만든 <code>vercel-test</code>가 보입니다.</li>
+  <li>새 프로젝트를 만들기 위해 <strong>Add New… → Project</strong>로 들어갑니다.</li>
+</ol>
+<figure>
+  <img src="../assets/vercel/00-add-new-project.png" alt="Add New 버튼과 Project 메뉴">
+  <figcaption>① Add New… 버튼 → ② Project 선택</figcaption>
+</figure>
+<ol start="2">
+  <li><strong>Import Git Repository</strong>(Git 저장소 가져오기) 영역에서 <strong>Continue with GitHub</strong>를 누릅니다.</li>
+</ol>
+<figure>
+  <img src="../assets/vercel/01-git-connect.png" alt="Git 제공자 연결 화면">
+  <figcaption>Git 제공자 연결 화면</figcaption>
+</figure>
+<ol start="3">
+  <li>GitHub 화면으로 넘어가면 <strong>Install / Authorize Vercel</strong>(설치·허용)을 누릅니다.
+    <ul>
+      <li>저장소 접근 범위는 <strong>All repositories</strong>(전체) 또는 <strong>Only select repositories</strong>(특정 저장소만) 중 하나를 고릅니다.</li>
+      <li><strong>Only select repositories</strong>를 골랐다면 목록에서 <strong>1단계에서 만든 <code>vercel-test</code></strong>를 반드시 선택하세요. 빠뜨리면 다음 단계 목록에 안 보입니다.</li>
+    </ul>
+  </li>
+</ol>
+<div class="warn">
+  <strong>자주 나는 함정</strong> — 저장소를 가져오려 할 때 <strong>"To link a GitHub repository, you need to install the GitHub integration first"</strong> 라는 빨간 경고가 보이면, 그 저장소가 있는 계정(개인 계정 또는 조직)에 <strong>Vercel 앱이 아직 설치 안 된 것</strong>입니다. 위 1~3번처럼 그 계정에 Vercel을 한 번 설치하면 해결됩니다.
+</div>
+<figure>
+  <img src="../assets/vercel/02-install-warning.png" alt="설치가 필요하다는 경고">
+  <figcaption>설치가 필요하다는 경고</figcaption>
+</figure>
+
+<hr>
+
+<h2 id="step3"><span class="step-badge">3단계</span>프로젝트 가져오기 (Import)</h2>
+<p>연결이 끝나면 <strong>같은 화면에서 이어서</strong> 우리 저장소를 고를 수 있습니다.</p>
+<ol>
+  <li>설치가 끝나면 Vercel 화면으로 돌아옵니다. <strong>Import Git Repository</strong> 목록에 1단계에서 만든 <code>vercel-test</code>가 보입니다. (화면이 닫혔다면 <strong>Add New… → Project</strong>로 다시 들어가면 됩니다.)</li>
 </ol>
 <figure>
   <img src="../assets/vercel/mirror-6-vercel-import.png" alt="Import Git Repository 목록에 보이는 vercel-test">
   <figcaption>① 미러링한 vercel-test 저장소 ② Import 버튼</figcaption>
 </figure>
-<div class="note">목록에 <code>vercel-test</code>가 안 보이면 1단계의 <strong>Vercel 앱 설치·접근 권한</strong>이 그 계정에 안 돼 있는 것입니다. 1단계로 돌아가 설치하거나, 접근 범위에 <code>vercel-test</code>를 추가해 주세요.</div>
+<div class="note">목록에 <code>vercel-test</code>가 안 보이면 2단계의 <strong>Vercel 앱 설치·접근 권한</strong>이 그 계정에 안 돼 있는 것입니다. 2단계로 돌아가 설치하거나, 접근 범위에 <code>vercel-test</code>를 추가해 주세요.</div>
 <ol start="2">
   <li><code>vercel-test</code> 오른쪽의 <strong>Import</strong>(가져오기)를 누릅니다.</li>
   <li>아래 설정 화면이 나옵니다. <strong>대부분 그대로 두면 됩니다.</strong>
@@ -460,7 +464,7 @@
     <tr><th>증상</th><th>원인</th><th>해결</th></tr>
   </thead>
   <tbody>
-    <tr><td>저장소 목록에 우리 저장소가 안 보임</td><td>Vercel 앱이 그 계정/조직에 설치 안 됨</td><td>1단계처럼 해당 계정에 Vercel 설치 (All 또는 해당 저장소 선택)</td></tr>
+    <tr><td>저장소 목록에 우리 저장소가 안 보임</td><td>Vercel 앱이 그 계정/조직에 설치 안 됨</td><td>2단계처럼 해당 계정에 Vercel 설치 (All 또는 해당 저장소 선택)</td></tr>
     <tr><td>"install the GitHub integration first" 빨간 경고</td><td>같은 원인 (앱 미설치)</td><td>위와 동일</td></tr>
     <tr><td>배포는 됐는데 흰 화면</td><td>빌드는 됐지만 실행 중 오류</td><td>강사와 함께 로그(Logs) 확인</td></tr>
     <tr><td>환경변수 넣었는데 화면이 그대로</td><td>재배포를 안 함</td><td>7단계 재배포</td></tr>

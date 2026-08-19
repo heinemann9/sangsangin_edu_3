@@ -334,9 +334,16 @@
   <figcaption>자료형 목록에서 <code>text</code>를 선택합니다</figcaption>
 </figure>
 <p>같은 방법으로 <code>content</code> 열도 추가하고 자료형을 <code>text</code>로 맞춥니다.</p>
-<div class="warn">
-  <strong>RLS 안내(중요)</strong> — 표 이름 아래 <strong>Enable Row Level Security (RLS)</strong> 체크가 켜져 있으면 기본적으로 바깥에서 데이터를 못 읽습니다. 아래 화면처럼 경고가 뜹니다.
+<figure>
+  <img src="../assets/supabase/03b-table-columns-filled.png" alt="열이 모두 채워진 화면">
+  <figcaption>id · created_at · title · content 열이 모두 준비된 화면</figcaption>
+</figure>
+<div class="note">
+  <strong>강사 포인트</strong> — 열 이름은 <strong>영어 소문자</strong>로 (예: <code>title</code>). 6단계 코드에서 이 이름을 그대로 씁니다 — 한글이나 띄어쓰기를 넣으면 나중에 막힙니다.
 </div>
+
+<h3>저장하기 전 — RLS 체크 정하기</h3>
+<p>표 이름 아래 <strong>Enable Row Level Security (RLS)</strong> 체크가 있습니다. 이게 켜져 있으면 <strong>바깥에서 데이터를 못 읽습니다.</strong> 이 데모에서는 <strong>연습용으로 체크를 해제</strong>해서, 별도 정책 없이 바로 데이터가 보이게 합니다.</p>
 <figure>
   <img src="../assets/supabase/03b-rls-checkbox.png" alt="RLS 체크박스">
   <figcaption>Enable Row Level Security (RLS) 체크 해제 위치</figcaption>
@@ -345,23 +352,21 @@
   <img src="../assets/supabase/03c-disable-rls-confirm.png" alt="RLS 해제 확인 창">
   <figcaption>체크를 해제하면 뜨는 확인 창 — Disable RLS를 누릅니다</figcaption>
 </figure>
-<div class="note">이 데모에서는 <strong>연습용으로 RLS를 꺼서</strong> 별도 정책 없이 바로 데이터가 보이게 합니다. 실제 서비스에서는 RLS를 켜고 읽기 정책을 따로 만드는 것이 안전합니다.</div>
 <figure>
   <img src="../assets/supabase/03d-rls-disabled-result.png" alt="RLS 해제된 결과 화면">
   <figcaption>RLS가 꺼진(Disabled) 상태로 바뀐 화면</figcaption>
 </figure>
-<figure>
-  <img src="../assets/supabase/03b-table-columns-filled.png" alt="열이 모두 채워진 화면">
-  <figcaption>id · created_at · title · content 열이 모두 준비된 화면 — Save 누르기</figcaption>
-</figure>
+<div class="warn">
+  <strong>이건 연습용 설정입니다.</strong> RLS를 끄면 읽기뿐 아니라 <strong>쓰기·삭제까지 열립니다.</strong> 4단계에서 복사할 <code>anon</code> 키는 브라우저에 그대로 내려가는 공개 키라, 사이트 주소를 아는 사람이 마음먹으면 표를 지울 수 있습니다. <strong>실습·발표용 공지 데이터만</strong> 넣고, 개인정보는 절대 넣지 마세요. 실제 서비스라면 RLS를 켜고 <a href="#rls">읽기 정책</a>만 여는 것이 맞습니다.
+</div>
 <ol start="3">
   <li><strong>Save</strong>(저장)를 누릅니다.</li>
 </ol>
 <div class="note">
-  <strong>강사 포인트</strong> — 열 이름은 <strong>영어 소문자</strong>로 (예: <code>title</code>). 6단계 코드에서 이 이름을 그대로 씁니다 — 한글이나 띄어쓰기를 넣으면 나중에 막힙니다.
+  <strong>RLS를 켜둔 채로 저장했다면</strong> — 화면에 데이터가 안 보입니다. 에러가 아니라 <strong>빈 목록</strong>이 오기 때문에 원인을 짚기 어렵습니다. 그럴 때는 <strong>누구나 읽기(조회)만 가능한 공개 정책</strong>을 하나 켜주면 됩니다 → 아래 <a href="#rls">읽기 공개 정책</a> 참고. 잘 모르겠으면 강사에게 "읽기 공개 정책" 요청.
 </div>
 <div class="note">
-  <strong>RLS를 켜둔 채로 진행했다면</strong> — 위에서 RLS를 끄지 않고 그대로 저장했다면, 화면에 데이터가 안 보일 수 있습니다. 그럴 때는 <strong>누구나 읽기(조회)만 가능한 공개 정책</strong>을 하나 켜주면 됩니다 → 아래 "자주 막히는 곳"의 <a href="#rls">읽기 공개 정책</a> 참고. 잘 모르겠으면 강사에게 "읽기 공개 정책" 요청.
+  <strong>6교시(로그인·글쓰기)까지 가는 팀이라면</strong> RLS를 <strong>끄지 말고</strong> 켠 채로 저장한 뒤 <a href="#rls">읽기 공개 정책</a>을 거는 쪽을 권합니다. 6교시에서 쓰기 정책을 걸면 RLS가 자동으로 켜지는데, 그때 읽기 정책이 없으면 <strong>목록이 사라집니다.</strong>
 </div>
 
 <hr>
@@ -431,6 +436,9 @@
 </figure>
 <div class="warn">
   <strong>anon public 키만</strong> 씁니다. 그 아래 <strong>service_role</strong> 키는 관리자용 비밀 키라 <strong>절대 사이트/코드에 넣지 않습니다.</strong> 이름에 <code>anon</code>(익명)이 있는 것만 복사하세요.
+</div>
+<div class="note">
+  <strong><code>anon</code> 키가 "공개해도 되는 키"인 이유</strong> — 이 키는 사이트에 실려 브라우저까지 그대로 내려갑니다. 그래도 괜찮은 건 <strong>RLS가 데이터를 지켜주기 때문</strong>입니다. 2단계에서 RLS를 껐다면 그 보호막이 없는 상태이니, 이 표에는 <strong>실습용 데이터만</strong> 두세요.
 </div>
 
 <hr>
@@ -524,10 +532,13 @@ export default async function Page() {
 
 <h2 id="step7"><span class="step-badge">7단계</span>화면에서 데이터 확인</h2>
 <ol>
-  <li>5단계에서 환경변수만 바꿨고 코드는 안 바꿨다면, Vercel <strong>Deployments → ⋯ → Redeploy</strong>로 재배포합니다. (6단계에서 코드를 push했다면 자동 배포가 이미 돌고 있습니다.)</li>
-  <li>1~2분 기다린 뒤 사이트 주소를 새로고침합니다.</li>
+  <li>6단계에서 코드를 GitHub에 올렸다면 <strong>자동 배포가 이미 돌고 있습니다.</strong> 그대로 1~2분 기다립니다.</li>
+  <li>사이트 주소를 새로고침합니다.</li>
   <li>3단계에서 넣은 데이터가 <strong>화면에 목록으로</strong> 보이면 성공입니다.</li>
 </ol>
+<div class="note">
+  <strong>코드를 안 바꾸고 환경변수만 고친 경우</strong>(예: 값을 잘못 넣어 다시 저장)는 자동 배포가 안 돕니다. Vercel <strong>Deployments → ⋯ → Redeploy</strong>로 직접 재배포하세요.
+</div>
 <figure>
   <img src="../assets/supabase/08-live-data.png" alt="사이트에 데이터가 표시된 화면">
   <figcaption>사이트에 데이터가 표시된 화면</figcaption>
@@ -543,15 +554,16 @@ export default async function Page() {
     <tr><th>순서</th><th>증상</th><th>원인</th><th>해결</th></tr>
   </thead>
   <tbody>
-    <tr><td>1</td><td>화면에 아무것도 안 나옴</td><td>환경변수 <strong>철자</strong> 오타</td><td><code>NEXT_PUBLIC_SUPABASE_URL</code> / <code>NEXT_PUBLIC_SUPABASE_ANON_KEY</code> 이름을 1:1로 대조</td></tr>
-    <tr><td>2</td><td>여전히 빈 화면</td><td>표 이름 / 열 이름 <strong>불일치</strong></td><td>코드의 <code>from('...')</code>·<code>n.열이름</code>이 Supabase 표·열 이름과 정확히 같은지 확인</td></tr>
-    <tr><td>3</td><td><code>permission denied</code> 류 오류</td><td><strong>RLS(행 보안)</strong> 공개 조회 정책 없음</td><td>아래 <a href="#rls">읽기 공개 정책</a> 참고 (또는 강사에게 요청)</td></tr>
-    <tr><td>4</td><td>로컬은 되는데 배포만 실패</td><td>환경변수가 <strong>Vercel에만 없음</strong></td><td>Vercel Settings에 같은 값이 있는지 확인 후 재배포</td></tr>
-    <tr><td>5</td><td>값을 넣었는데 그대로</td><td><strong>재배포 안 함</strong></td><td>7단계 재배포</td></tr>
+    <tr><td>1</td><td>값을 넣었는데 화면이 그대로</td><td><strong>재배포 안 함</strong> — 가장 흔함</td><td>7단계 재배포. 배포가 끝났는지부터 확인</td></tr>
+    <tr><td>2</td><td>화면에 아무것도 안 나옴</td><td>환경변수 <strong>철자</strong> 오타</td><td><code>NEXT_PUBLIC_SUPABASE_URL</code> / <code>NEXT_PUBLIC_SUPABASE_ANON_KEY</code> 이름을 1:1로 대조</td></tr>
+    <tr><td>3</td><td>여전히 빈 목록 (에러는 없음)</td><td><strong>RLS(행 보안)</strong>가 켜져 있는데 공개 조회 정책 없음</td><td>아래 <a href="#rls">읽기 공개 정책</a> 참고 (또는 강사에게 요청)</td></tr>
+    <tr><td>4</td><td>여전히 빈 화면</td><td>표 이름 / 열 이름 <strong>불일치</strong></td><td>코드의 <code>from('...')</code>·<code>n.열이름</code>이 Supabase 표·열 이름과 정확히 같은지 확인</td></tr>
+    <tr><td>5</td><td><code>permission denied</code> 류 오류</td><td>RLS 정책이 조회를 막고 있음</td><td>위 3번과 동일</td></tr>
+    <tr><td>6</td><td>로컬은 되는데 배포만 실패</td><td>환경변수가 <strong>Vercel에만 없음</strong></td><td>Vercel Settings에 같은 값이 있는지 확인 후 재배포</td></tr>
   </tbody>
 </table>
 
-<h3 id="rls">읽기 공개 정책 (RLS) — 3번 증상일 때</h3>
+<h3 id="rls">읽기 공개 정책 (RLS) — 3·5번 증상일 때</h3>
 <p>Supabase는 기본적으로 바깥에서의 읽기를 막아둡니다. 이 데모에서는 <strong>누구나 조회만 가능</strong>하게 열어줍니다.</p>
 <ol>
   <li>Supabase → <strong>Authentication → Policies</strong>(또는 Table Editor의 표에서 <strong>RLS policies</strong>)로 갑니다.</li>

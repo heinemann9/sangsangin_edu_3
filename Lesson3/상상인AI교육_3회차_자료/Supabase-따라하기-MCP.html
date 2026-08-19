@@ -223,10 +223,14 @@
   <li><strong>Claude Code</strong>가 설치되어 실행되는 상태 (1회차에서 준비 완료)</li>
   <li><strong>팀 프로젝트 폴더</strong>에서 Claude Code를 열어둔 상태</li>
   <li><strong>GitHub 계정</strong> — Supabase 계정과 프로젝트는 아래 <a href="#prep">시작 전 준비</a>에서 직접 만듭니다</li>
-  <li><a href="Vercel-배포-따라하기-웹버전-참고용.html">Vercel 배포 따라하기</a> 완료 — 사이트가 <code>주소.vercel.app</code>으로 떠 있어야 합니다</li>
+  <li><a href="Vercel-배포-따라하기-MCP.html">Vercel 배포 따라하기 (MCP 버전)</a> 완료 — 사이트가 <code>주소.vercel.app</code>으로 떠 있어야 합니다</li>
 </ul>
 
-<p><strong>처음 한 번만</strong> 계정과 프로젝트를 만들고, 그 뒤 본 실습은 <strong>5단계</strong>입니다. 웹 버전에서 7단계에 걸쳐 클릭하던 일이 5단계로 줄었습니다.</p>
+<div class="warn">
+  <strong>Vercel 통로가 먼저 열려 있어야 합니다.</strong> 이 문서의 4단계에서 <strong>Vercel 환경변수에 값을 넣고 재배포</strong>하는데, 그러려면 <a href="Vercel-배포-따라하기-MCP.html#step4">Vercel 배포 따라하기 (MCP 버전) 4단계</a>의 <strong>MCP 연결과 <code>npx vercel login</code>이 둘 다 끝나 있어야</strong> 합니다. Vercel을 <strong>웹 버전</strong>으로만 진행한 팀은 그 4단계를 먼저 하고 오세요 — 안 하면 이 문서 4단계에서 막힙니다.
+</div>
+
+<p><strong>처음 한 번만</strong> 계정과 프로젝트를 만들고, 그 뒤 본 실습은 <strong>0~5단계</strong>입니다. 웹 버전에서 0~7단계에 걸쳐 클릭하던 일이 여기서는 대부분 한 문장으로 줄어듭니다.</p>
 <div class="flow">[처음 한 번] A. 계정 만들기 → B. 프로젝트 만들기<br>
 0. 통로 열기(MCP 연결) → 1. 표 만들기 → 2. 데이터 넣기<br>
 &nbsp;&nbsp;&nbsp;→ 3. 읽기 공개 정책 → 4. 사이트에 연결 → 5. 화면 확인</div>
@@ -295,12 +299,19 @@
 <hr>
 
 <h2 id="step0"><span class="step-badge">0단계</span>통로 열기 (MCP 연결)</h2>
-<p>한 번만 하면 됩니다. 다음에는 이 단계를 건너뜁니다.</p>
+<p>한 번만 하면 됩니다. 다음에는 이 단계를 건너뜁니다. Vercel 통로를 열 때와 <strong>순서가 같습니다 — 등록 → 재시작 → 인증.</strong></p>
 <ol>
-  <li>Claude Code 창에 아래를 <strong>그대로</strong> 입력합니다.
-    <div class="flow">/mcp</div>
+  <li>Claude Code 창에 아래를 <strong>그대로</strong> 입력해 Supabase를 <strong>등록</strong>합니다.
+    <div class="flow">claude mcp add --transport http --scope user supabase https://mcp.supabase.com/mcp</div>
   </li>
-  <li>목록에서 <strong>Supabase</strong>를 고르고 Enter를 누릅니다.</li>
+</ol>
+<figure>
+  <img src="assets/mcp/15-supabase-mcp-add.png" alt="Supabase MCP 등록 명령어와 결과">
+  <figcaption>① 그대로 입력할 명령어 ② 등록은 됐지만 <strong>아직 인증 전</strong> 상태 — 아래 2·3번으로 이어집니다</figcaption>
+</figure>
+<ol start="2">
+  <li>Claude Code를 종료하고 <strong><code>claude --continue</code>로 다시 시작</strong>합니다. 재시작해야 목록에 나타납니다. (그냥 <code>claude</code>로 시작하면 대화 내용이 사라집니다.)</li>
+  <li><code>/mcp</code>를 입력하고 목록에서 <strong>Supabase</strong>를 고른 뒤 Enter를 누릅니다.</li>
 </ol>
 <figure>
   <img src="assets/mcp/17-mcp-list-supabase.png" alt="/mcp 목록에 보이는 supabase">
@@ -311,7 +322,7 @@
   <figcaption>① <strong>Authenticate</strong>를 선택하면 브라우저가 열립니다</figcaption>
 </figure>
 
-<ol start="3">
+<ol start="4">
   <li>브라우저가 열리면 Supabase 계정으로 로그인하고 <strong>허용(Authorize)</strong>을 누릅니다.</li>
 </ol>
 <figure>
@@ -327,21 +338,16 @@
   <figcaption>이 화면이 나오면 탭을 닫고 Claude Code로 돌아갑니다</figcaption>
 </figure>
 
-<ol start="4">
+<ol start="5">
   <li>터미널로 돌아와 <code>Connected</code>라고 나오면 성공입니다.</li>
 </ol>
 
-<div class="warn">
-  <strong>목록에 Supabase가 없으면</strong> 아직 등록이 안 된 것입니다. 아래를 입력한 뒤 Claude Code를 <strong>종료하고 <code>claude --continue</code>로 다시 시작</strong>하면 목록에 나타납니다. (그냥 <code>claude</code>로 시작하면 대화 내용이 사라집니다.)
-  <div class="flow">claude mcp add --transport http supabase https://mcp.supabase.com/mcp</div>
+<div class="note">
+  <strong>이미 목록에 Supabase가 보인다면</strong> 강사가 미리 등록해 둔 것입니다. 1·2번을 건너뛰고 <code>/mcp</code>부터 하세요.
 </div>
-<figure>
-  <img src="assets/mcp/15-supabase-mcp-add.png" alt="Supabase MCP 등록 명령어와 결과">
-  <figcaption>① 그대로 입력할 명령어 ② 등록은 됐지만 아직 인증 전 상태 — 위 2번으로 돌아가 인증합니다</figcaption>
-</figure>
 
 <div class="note">
-  <strong>강사 포인트</strong> — 이 통로는 여러분 Supabase 계정 <strong>전체</strong>에 연결됩니다. 다른 팀 프로젝트를 실수로 건드리지 않도록, 강사가 팀별로 범위를 좁혀 등록해 줄 수 있습니다. 아래 "안전하게 쓰기" 참고.
+  <strong>강사 포인트</strong> — 이 통로는 여러분 Supabase 계정 <strong>전체</strong>에 연결됩니다. 다른 팀 프로젝트를 실수로 건드리지 않도록, 강사가 팀별로 범위를 좁혀 등록해 줄 수 있습니다. 아래 <a href="#safety">안전하게 쓰기</a> 참고.
 </div>
 
 <hr>
@@ -393,6 +399,16 @@
 <p>여기가 <strong>가장 중요한 단계</strong>입니다. 지금 상태로는 데이터가 표 안에 있어도 <strong>사이트 화면에는 안 나옵니다.</strong></p>
 <p>Supabase는 표를 만들 때 <strong>행 보안(RLS)</strong>을 켜 두는데, 이건 "바깥에서 함부로 읽지 못하게" 잠가두는 장치입니다. 잠금을 풀지 않으면 우리 사이트도 못 읽습니다.</p>
 
+<h3>먼저 — 잠겨 있다는 걸 눈으로 확인해보기 (선택)</h3>
+<p>정책을 걸기 <strong>전에</strong> 이렇게 물어보면 지금 상태를 볼 수 있습니다. 건너뛰고 바로 정책을 걸어도 됩니다.</p>
+<div class="flow">지금 바깥에서 notices를 읽으면 어떻게 되는지 확인해줘</div>
+
+<p>Claude가 실제로 바깥에서 요청을 보내 결과를 보여줍니다. 표에 데이터 3줄이 <strong>분명히 있는데도</strong> 이렇게 나옵니다.</p>
+<div class="flow">읽기 결과: []&nbsp;&nbsp;&nbsp;(빈 목록)</div>
+
+<p>에러가 아니라 <strong>빈 목록</strong>이 온다는 게 핵심입니다. 그래서 "왜 화면에 아무것도 안 나오지?" 하고 한참 헤매게 됩니다.</p>
+
+<h3>정책 걸기</h3>
 <div class="flow">notices를 누구나 읽을 수 있게 공개 정책 걸어줘.<br>
 쓰기는 막아둬.</div>
 
@@ -400,24 +416,27 @@
 이제 사이트에서 목록을 불러올 수 있습니다.<br>
 쓰기는 여전히 막혀 있습니다.</div>
 
-<h3>잠겨 있다는 걸 눈으로 확인해보기 (선택)</h3>
-<p>궁금하면 정책을 걸기 <strong>전에</strong> 이렇게 물어보세요.</p>
-<div class="flow">지금 바깥에서 notices를 읽으면 어떻게 되는지 확인해줘</div>
-
-<p>Claude가 실제로 바깥에서 요청을 보내 결과를 보여줍니다. 표에 데이터 3줄이 <strong>분명히 있는데도</strong> 이렇게 나옵니다.</p>
-<div class="flow">읽기 결과: []&nbsp;&nbsp;&nbsp;(빈 목록)</div>
-
-<p>에러가 아니라 <strong>빈 목록</strong>이 온다는 게 핵심입니다. 그래서 "왜 화면에 아무것도 안 나오지?" 하고 한참 헤매게 됩니다. 정책을 걸고 다시 확인하면 3줄이 나옵니다.</p>
+<p>위 확인을 해봤다면 <code>다시 확인해줘</code>라고 물어보세요. 이번에는 3줄이 그대로 나옵니다.</p>
 
 <div class="warn">
-  이건 데모라서 공개로 여는 설정입니다. 비밀번호·개인정보 같은 민감한 데이터는 이렇게 열지 않습니다. 실제 서비스에서는 "로그인한 사람만" 같은 조건을 붙여 좁힙니다.
+  이건 데모라서 <strong>읽기만</strong> 공개로 여는 설정입니다. 비밀번호·개인정보 같은 민감한 데이터는 이렇게 열지 않습니다. 실제 서비스에서는 "로그인한 사람만" 같은 조건을 붙여 좁힙니다.
+</div>
+<div class="note">
+  <strong>RLS를 아예 꺼버리면 안 되나요?</strong> — 그러면 읽기는 되지만 <strong>쓰기·삭제까지 같이 열립니다.</strong> 4단계에서 넣을 열쇠(<code>anon</code>)는 브라우저에 그대로 내려가는 공개 키라, RLS가 꺼져 있으면 사이트 주소를 아는 누구나 표를 지울 수 있습니다. <strong>RLS를 켠 채 읽기 정책만 여는</strong> 지금 방식이 안전합니다.
 </div>
 
 <hr>
 
 <h2 id="step4"><span class="step-badge">4단계</span>사이트에 연결 (주소·열쇠 + 재배포)</h2>
 <p>사이트가 이 표를 읽으려면 <strong>주소(URL)</strong>와 <strong>열쇠(API Key)</strong>가 필요합니다. 웹 버전은 이 두 값을 눈으로 찾아 복사해 Vercel에 붙여넣는데(4·5단계), <strong>여기가 가장 오타가 많이 나는 구간</strong>입니다.</p>
-<p>MCP 버전은 한 줄입니다.</p>
+
+<div class="note">
+  <strong>먼저 — 화면 코드가 있는지 확인하세요.</strong> 목록을 보여주는 코드가 아직 없으면 <strong>지금</strong> 만들어야 합니다. 아래 환경변수를 넣고 배포한 뒤에 코드를 만들면 배포를 또 해야 하니까요.
+  <div class="flow">우리 사이트에 공지 목록 보여주는 화면 만들어줘</div>
+  이 부분은 웹 버전 6단계와 같고, MCP와 무관하게 Claude가 원래 해주던 일입니다.
+</div>
+
+<p>코드가 준비됐으면, 주소·열쇠 등록과 재배포는 한 줄입니다.</p>
 <div class="flow">우리 supabase 주소랑 열쇠를 vercel 환경변수에 넣고 다시 배포해줘</div>
 
 <p>Claude가 순서대로 처리하고 보고합니다.</p>
@@ -439,7 +458,7 @@ Vercel에 등록했습니다.<br>
 </div>
 
 <div class="note">
-  <strong>코드는 어떻게 되나요?</strong> — 화면에 목록을 보여주는 코드가 아직 없으면 <code>우리 사이트에 공지 목록 보여주는 화면 만들어줘</code>라고 말하면 됩니다. 이 부분은 웹 버전 6단계와 같고, MCP와 무관하게 Claude가 원래 해주던 일입니다.
+  <strong>여기서 막히면</strong> — <code>vercel</code> 관련 오류가 나면 Vercel 통로가 안 열린 것입니다. <a href="Vercel-배포-따라하기-MCP.html#step4">Vercel 배포 따라하기 (MCP 버전) 4단계</a>를 먼저 끝내고 다시 말해주세요.
 </div>
 
 <hr>
@@ -479,14 +498,14 @@ Vercel에 등록했습니다.<br>
 
 <hr>
 
-<h2>안전하게 쓰기 (꼭 읽어주세요)</h2>
+<h2 id="safety">안전하게 쓰기 (꼭 읽어주세요)</h2>
 <p>MCP 통로는 편한 만큼 <strong>권한이 셉니다.</strong> Claude가 표를 만들 수 있다는 건, <strong>지울 수도 있다</strong>는 뜻입니다.</p>
 
 <h3>해야 할 것</h3>
 <ul>
   <li><strong>"지워줘"·"초기화해줘" 같은 말은 신중하게.</strong> 무엇이 지워지는지 확인하고 답하세요.</li>
   <li><strong>다른 팀 프로젝트가 같은 계정에 있으면 강사에게 범위 제한을 요청</strong>하세요. 프로젝트 하나에만 연결되도록 좁힐 수 있습니다.
-    <div class="flow">claude mcp add --transport http supabase-우리팀 \<br>
+    <div class="flow">claude mcp add --transport http --scope user supabase-우리팀 \<br>
 &nbsp;&nbsp;"https://mcp.supabase.com/mcp?project_ref=우리프로젝트ID&amp;read_only=false"</div>
   </li>
   <li><strong>조회만 할 때는 읽기 전용</strong>으로 열어두면 사고가 원천 차단됩니다. 위 주소 끝의 <code>read_only=false</code>를 <code>read_only=true</code>로 바꾸면 됩니다. 단 이 상태에서는 표 만들기·정책 걸기가 안 됩니다.</li>
@@ -505,12 +524,13 @@ Vercel에 등록했습니다.<br>
   <thead><tr><th>웹 버전 단계</th><th>MCP 버전</th><th>달라지는 점</th></tr></thead>
   <tbody>
     <tr><td>0단계 로그인 · 1단계 프로젝트 만들기</td><td>시작 전 준비 A·B</td><td>같은 절차 (처음 한 번만)</td></tr>
+    <tr><td>(없음)</td><td><strong>0단계 통로 열기</strong></td><td><strong>MCP 버전에만 있는 준비 단계</strong> — 계정당 한 번</td></tr>
     <tr><td>2단계 표 만들기</td><td>1단계</td><td>열을 하나하나 추가 → 한 문장</td></tr>
     <tr><td>3단계 데이터 넣기</td><td>2단계</td><td>Insert row 반복 → 한 번에</td></tr>
-    <tr><td>RLS 공개 정책</td><td>3단계</td><td>메뉴를 찾아 들어감 → 한 문장</td></tr>
+    <tr><td>2단계에서 RLS 끄기 / <a href="Supabase-따라하기-웹버전-참고용.html#rls">#rls</a> 정책</td><td>3단계</td><td><strong>도착 상태가 다릅니다</strong> — 웹은 RLS를 끄고, MCP는 켠 채 읽기 정책만 엽니다</td></tr>
     <tr><td>4단계 연결 정보 복사</td><td>4단계에 흡수</td><td>눈으로 찾아 복사 → 자동</td></tr>
     <tr><td>5단계 환경변수 입력</td><td>4단계에 흡수</td><td>손으로 붙여넣기(오타 빈발) → 자동</td></tr>
-    <tr><td>6단계 코드 붙여넣기</td><td>(그대로)</td><td>원래 Claude가 하던 일</td></tr>
+    <tr><td>6단계 코드 붙여넣기</td><td>4단계 앞</td><td>원래 Claude가 하던 일</td></tr>
     <tr><td>7단계 재배포·확인</td><td>4·5단계</td><td>대시보드 클릭 → 한 문장</td></tr>
   </tbody>
 </table>
